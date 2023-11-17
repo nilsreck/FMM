@@ -1,0 +1,101 @@
+,norm,GO name,Cancer Related
+GO:0009411,5.72134337688408,response to uv,True
+GO:0006283,5.718535227117779,transcription coupled nucleotide excision repair,False
+GO:0032079,5.526893658756434,positive regulation of endodeoxyribonuclease activity,False
+GO:0071345,5.492904397171982,cellular response to cytokine stimulus,True
+GO:0033683,5.480071332456095,"nucleotide excision repair, dna incision",False
+GO:0070849,5.407172157553313,response to epidermal growth factor,False
+GO:0075525,5.396815596303055,viral translational termination reinitiation,False
+GO:2000679,5.321443993461124,positive regulation of transcription regulatory region dna binding,False
+GO:0007254,5.315362415504366,jnk cascade,False
+GO:0051403,5.301340024183264,stress activated mapk cascade,False
+GO:0006289,5.260022347380552,nucleotide excision repair,True
+GO:0032735,5.182558745602061,positive regulation of interleukin 12 production,False
+GO:0046833,5.168889397625249,positive regulation of rna export from nucleus,False
+GO:0098586,5.157771970822932,cellular response to virus,False
+GO:0045638,5.129403505347567,negative regulation of myeloid cell differentiation,False
+GO:0006260,5.1200434976301015,dna replication,True
+GO:1900264,5.114956822388109,positive regulation of dna directed dna polymerase activity,False
+GO:0042104,5.102281992810344,positive regulation of activated t cell proliferation,False
+GO:0006284,5.079324286736041,base excision repair,False
+GO:0071222,5.078026028385402,cellular response to lipopolysaccharide,True
+GO:0006298,5.060769719906643,mismatch repair,False
+GO:0051292,5.030188974548629,nuclear pore complex assembly,False
+GO:1904706,4.96616910009655,negative regulation of vascular associated smooth muscle cell proliferation,True
+GO:0030592,4.939221051013352,dna adp ribosylation,False
+GO:0070212,4.928010028896146,protein poly adp ribosylation,False
+GO:0006471,4.921600280382054,protein adp ribosylation,False
+GO:0033129,4.905533276455375,positive regulation of histone phosphorylation,False
+GO:1904294,4.897310250733216,positive regulation of erad pathway,False
+GO:0032206,4.874029466524711,positive regulation of telomere maintenance,False
+GO:0032147,4.870082210329485,activation of protein kinase activity,True
+GO:0000723,4.863615970950736,telomere maintenance,False
+GO:0048010,4.829180776930762,vascular endothelial growth factor receptor signaling pathway,True
+GO:0035066,4.822341707158421,positive regulation of histone acetylation,False
+GO:0097190,4.817697725688155,apoptotic signaling pathway,False
+GO:1990869,4.816118399978228,cellular response to chemokine,False
+GO:0051568,4.801974867190593,histone h3 k4 methylation,True
+GO:0061820,4.778643823257753,telomeric d loop disassembly,True
+GO:0051603,4.776766600786528,proteolysis involved in cellular protein catabolic process,False
+GO:0045786,4.770927745692564,negative regulation of cell cycle,True
+GO:0022614,4.769632266830607,membrane to membrane docking,False
+GO:0045648,4.766075906670436,positive regulation of erythrocyte differentiation,True
+GO:0075522,4.7622578677577385,ires dependent viral translational initiation,False
+GO:0071360,4.760735826014173,cellular response to exogenous dsrna,False
+GO:0032729,4.756830225840482,positive regulation of interferon gamma production,False
+GO:0033674,4.753540194812816,positive regulation of kinase activity,False
+GO:0000077,4.749735037450825,dna damage checkpoint signaling,False
+GO:0070266,4.743570264627606,necroptotic process,False
+GO:0006970,4.734317304206785,response to osmotic stress,False
+GO:0006378,4.7292415349078185,mrna polyadenylation,False
+GO:0038202,4.726576832621875,torc1 signaling,False
+GO:2001268,4.724642411019143,negative regulation of cysteine type endopeptidase activity involved in apoptotic signaling pathway,False
+GO:0045948,4.71973363832672,positive regulation of translational initiation,False
+GO:0019985,4.718065563840233,translesion synthesis,False
+GO:1904354,4.705751022602407,negative regulation of telomere capping,False
+GO:1902416,4.695587312719266,positive regulation of mrna binding,False
+GO:0006302,4.688185888782307,double strand break repair,True
+GO:0046826,4.68809455015094,negative regulation of protein export from nucleus,False
+GO:0010212,4.65837592465366,response to ionizing radiation,False
+GO:0006975,4.65602412385005,dna damage induced protein phosphorylation,True
+GO:0070555,4.650451012519334,response to interleukin 1,True
+GO:0000082,4.648798655000885,g1/s transition of mitotic cell cycle,True
+GO:1903672,4.644962350941506,positive regulation of sprouting angiogenesis,False
+GO:0031860,4.644359350388559,telomeric 3 overhang formation,False
+GO:0035509,4.632418786545864,negative regulation of myosin light chain phosphatase activity,False
+GO:0010759,4.626940457637811,positive regulation of macrophage chemotaxis,False
+GO:0033137,4.620970853344371,negative regulation of peptidyl serine phosphorylation,False
+GO:0032680,4.618762357352611,regulation of tumor necrosis factor production,False
+GO:0016572,4.614717863062969,histone phosphorylation,False
+GO:1903140,4.612003858213633,regulation of establishment of endothelial barrier,False
+GO:1904646,4.592109006130412,cellular response to amyloid beta,False
+GO:0072429,4.581452071657614,response to intra s dna damage checkpoint signaling,False
+GO:0010501,4.5807916349840045,rna secondary structure unwinding,False
+GO:0071480,4.5782597248368,cellular response to gamma radiation,True
+GO:0031297,4.573692265130748,replication fork processing,False
+GO:0071681,4.566155775903394,cellular response to indole 3 methanol,True
+GO:0010332,4.54928510315284,response to gamma radiation,True
+GO:0008543,4.54787366860216,fibroblast growth factor receptor signaling pathway,True
+GO:0044806,4.545617395728194,g quadruplex dna unwinding,False
+GO:0043410,4.542030342255888,positive regulation of mapk cascade,True
+GO:0120041,4.540621396351437,positive regulation of macrophage proliferation,False
+GO:0031334,4.5314610323512285,positive regulation of protein containing complex assembly,False
+GO:0033234,4.511125913768843,negative regulation of protein sumoylation,False
+GO:0010225,4.509782838475061,response to uv c,False
+GO:0051096,4.509420137877029,positive regulation of helicase activity,False
+GO:0032355,4.509134612039728,response to estradiol,True
+GO:0051972,4.506205564782654,regulation of telomerase activity,False
+GO:0060544,4.503266530150971,regulation of necroptotic process,False
+GO:0051281,4.494307595868309,positive regulation of release of sequestered calcium ion into cytosol,False
+GO:1903608,4.488185838736924,protein localization to cytoplasmic stress granule,False
+GO:0009314,4.478895989625551,response to radiation,False
+GO:0030154,4.464550364482692,cell differentiation,False
+GO:1904996,4.46442807371579,positive regulation of leukocyte adhesion to vascular endothelial cell,True
+GO:0006401,4.464007165939956,rna catabolic process,False
+GO:0043388,4.451841100540428,positive regulation of dna binding,False
+GO:0045454,4.447605602657156,cell redox homeostasis,False
+GO:0030033,4.442672257338113,microvillus assembly,False
+GO:0001516,4.4417824586639325,prostaglandin biosynthetic process,False
+GO:0043297,4.437793327066503,apical junction assembly,False
+GO:0008584,4.431009477150024,male gonad development,True
+GO:0000731,4.424645100946164,dna synthesis involved in dna repair,True

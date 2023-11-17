@@ -1,0 +1,101 @@
+,norm,GO name,Cancer Related
+GO:0007219,6.418544235,notch signaling pathway,TRUE
+GO:2000737,6.073516946,negative regulation of stem cell differentiation,FALSE
+GO:0070431,6.038686996,nucleotide binding oligomerization domain containing 2 signaling pathway,FALSE
+GO:2001022,5.794608867,positive regulation of response to dna damage stimulus,TRUE
+GO:0036089,5.7387645,cleavage furrow formation,FALSE
+GO:1900103,5.663846216,positive regulation of endoplasmic reticulum unfolded protein response,FALSE
+GO:0070102,5.658084771,interleukin 6 mediated signaling pathway,TRUE
+GO:0032691,5.642437382,negative regulation of interleukin 1 beta production,FALSE
+GO:0007254,5.635783126,JNK cascade,FALSE
+GO:0002726,5.578131087,positive regulation of t cell cytokine production,TRUE
+GO:0051568,5.558413974,histone h3 k4 methylation,TRUE
+GO:0010759,5.527818388,positive regulation of macrophage chemotaxis,FALSE
+GO:0007183,5.490163391,smad protein complex assembly,TRUE
+GO:0002040,5.378169173,sprouting angiogenesis,FALSE
+GO:0043254,5.32455554,regulation of protein containing complex assembly,FALSE
+GO:0046579,5.295422639,positive regulation of ras protein signal transduction,TRUE
+GO:1990000,5.274537335,amyloid fibril formation,TRUE
+GO:0097692,5.252571841,histone h3 k4 monomethylation,TRUE
+GO:0044648,5.252571841,histone h3 k4 dimethylation,TRUE
+GO:0036003,5.249152276,positive regulation of transcription from rna polymerase ii promoter in response to stress,FALSE
+GO:0051403,5.247514195,stress activated mapk cascade,FALSE
+GO:0032355,5.227816271,response to estradiol,TRUE
+GO:0097191,5.218789499,extrinsic apoptotic signaling pathway,TRUE
+GO:0106077,5.214821496,histone succinylation,FALSE
+GO:0007254,5.18447748,jnk cascade,FALSE
+GO:0071499,5.151672483,cellular response to laminar fluid shear stress,FALSE
+GO:0008543,5.133031306,fibroblast growth factor receptor signaling pathway,TRUE
+GO:2001235,5.094619127,positive regulation of apoptotic signaling pathway,FALSE
+GO:0009314,5.08738373,response to radiation,FALSE
+GO:0016572,5.07425424,histone phosphorylation,FALSE
+GO:0090267,5.052627401,positive regulation of mitotic cell cycle spindle assembly checkpoint,FALSE
+GO:0051209,5.038869899,release of sequestered calcium ion into cytosol,FALSE
+GO:0033628,5.034783281,regulation of cell adhesion mediated by integrin,FALSE
+GO:0048260,5.027434401,positive regulation of receptor mediated endocytosis,TRUE
+GO:0043552,5.023970288,positive regulation of phosphatidylinositol 3 kinase activity,TRUE
+GO:0043507,5.00090901,positive regulation of jun kinase activity,FALSE
+GO:0010942,4.981767786,positive regulation of cell death,TRUE
+GO:0051492,4.973333352,regulation of stress fiber assembly,TRUE
+GO:0009617,4.956600761,response to bacterium,FALSE
+GO:0010811,4.955310512,positive regulation of cell substrate adhesion,FALSE
+GO:0060337,4.954652174,type i interferon signaling pathway,TRUE
+GO:0000956,4.954252241,nuclear transcribed mrna catabolic process,FALSE
+GO:0048661,4.947987519,positive regulation of smooth muscle cell proliferation,TRUE
+GO:0030509,4.946115607,bmp signaling pathway,TRUE
+GO:2000048,4.937441881,negative regulation of cell cell adhesion mediated by cadherin,FALSE
+GO:0051496,4.93261577,positive regulation of stress fiber assembly,TRUE
+GO:0071316,4.929121175,cellular response to nicotine,FALSE
+GO:0035509,4.925096089,negative regulation of myosin light chain phosphatase activity,FALSE
+GO:0048009,4.898358227,insulin like growth factor receptor signaling pathway,FALSE
+GO:0060396,4.886291426,growth hormone receptor signaling pathway,TRUE
+GO:0043388,4.868729843,positive regulation of dna binding,FALSE
+GO:1903753,4.861791066,negative regulation of p38mapk cascade,FALSE
+GO:2001234,4.858532477,negative regulation of apoptotic signaling pathway,FALSE
+GO:0042493,4.848732348,response to xenobiotic stimulus,TRUE
+GO:0030520,4.843775593,intracellular estrogen receptor signaling pathway,TRUE
+GO:1902523,4.839826977,positive regulation of protein k63 linked ubiquitination,FALSE
+GO:0006970,4.83909988,response to osmotic stress,FALSE
+GO:0000423,4.828784437,mitophagy,FALSE
+GO:0032731,4.826835893,positive regulation of interleukin 1 beta production,TRUE
+GO:0034629,4.800292124,cellular protein containing complex localization,FALSE
+GO:0048012,4.799613592,hepatocyte growth factor receptor signaling pathway,TRUE
+GO:0017015,4.78379613,regulation of transforming growth factor beta receptor signaling pathway,TRUE
+GO:2001238,4.782694884,positive regulation of extrinsic apoptotic signaling pathway,TRUE
+GO:0070886,4.782583115,positive regulation of calcineurin nfat signaling cascade,FALSE
+GO:0044344,4.78212309,cellular response to fibroblast growth factor stimulus,FALSE
+GO:0050731,4.776697882,positive regulation of peptidyl tyrosine phosphorylation,TRUE
+GO:0003184,4.764676251,pulmonary valve morphogenesis,FALSE
+GO:0032760,4.761600443,positive regulation of tumor necrosis factor production,FALSE
+GO:0006306,4.755858795,dna methylation,FALSE
+GO:0098780,4.75258205,response to mitochondrial depolarisation,FALSE
+GO:0050729,4.744379184,positive regulation of inflammatory response,FALSE
+GO:0010595,4.744303299,positive regulation of endothelial cell migration,TRUE
+GO:0046326,4.744194246,positive regulation of glucose import,TRUE
+GO:0070498,4.73551629,interleukin 1 mediated signaling pathway,TRUE
+GO:0030512,4.733227446,negative regulation of transforming growth factor beta receptor signaling pathway,FALSE
+GO:0046676,4.729605952,negative regulation of insulin secretion,FALSE
+GO:0010039,4.720197763,response to iron ion,FALSE
+GO:1903936,4.720122076,cellular response to sodium arsenite,FALSE
+GO:1902042,4.683807987,negative regulation of extrinsic apoptotic signaling pathway via death domain receptors,TRUE
+GO:0070555,4.683463585,response to interleukin 1,TRUE
+GO:0032924,4.674861137,activin receptor signaling pathway,TRUE
+GO:0006977,4.669606814,"dna damage response, signal transduction by p53 class mediator resulting in cell cycle arrest",TRUE
+GO:0032270,4.669154787,positive regulation of cellular protein metabolic process,FALSE
+GO:0010718,4.647645209,positive regulation of epithelial to mesenchymal transition,TRUE
+GO:0051894,4.639224357,positive regulation of focal adhesion assembly,TRUE
+GO:0032000,4.623011511,positive regulation of fatty acid beta oxidation,FALSE
+GO:0045792,4.611741072,negative regulation of cell size,FALSE
+GO:0051000,4.610661923,positive regulation of nitric oxide synthase activity,FALSE
+GO:1904358,4.60478042,positive regulation of telomere maintenance via telomere lengthening,FALSE
+GO:0043508,4.604595382,negative regulation of jun kinase activity,FALSE
+GO:1901222,4.599669272,regulation of nik/nf kappab signaling,FALSE
+GO:0051639,4.593049445,actin filament network formation,FALSE
+GO:0006337,4.592835782,nucleosome disassembly,TRUE
+GO:0002230,4.591529451,positive regulation of defense response to virus by host,FALSE
+GO:0001819,4.58961512,positive regulation of cytokine production,FALSE
+GO:2000811,4.589270717,negative regulation of anoikis,TRUE
+GO:0010907,4.58437142,positive regulation of glucose metabolic process,FALSE
+GO:1990090,4.581545786,cellular response to nerve growth factor stimulus,FALSE
+GO:0071773,4.570755032,cellular response to bmp stimulus,TRUE
+GO:0042744,4.564127362,hydrogen peroxide catabolic process,FALSE

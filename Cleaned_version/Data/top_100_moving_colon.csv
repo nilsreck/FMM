@@ -1,0 +1,101 @@
+,norm,GO name,Cancer Related
+GO:0006265,7.199806171,dna topological change,TRUE
+GO:0032793,6.780119963,positive regulation of creb transcription factor activity,FALSE
+GO:0007275,6.638470876,multicellular organism development,FALSE
+GO:0051256,6.495830666,mitotic spindle midzone assembly,FALSE
+GO:2000737,6.275945634,negative regulation of stem cell differentiation,FALSE
+GO:0030592,6.24061567,dna adp ribosylation,FALSE
+GO:0009314,6.18648302,response to radiation,FALSE
+GO:1900264,6.074467802,positive regulation of dna directed dna polymerase activity,FALSE
+GO:0043552,6.061150311,positive regulation of phosphatidylinositol 3 kinase activity,TRUE
+GO:0007219,5.995833831,notch signaling pathway,TRUE
+GO:0032691,5.954040375,negative regulation of interleukin 1 beta production,FALSE
+GO:0048025,5.922478077,"negative regulation of mrna splicing, via spliceosome",FALSE
+GO:0070934,5.860822515,crd mediated mrna stabilization,FALSE
+GO:0070212,5.803635928,protein poly adp ribosylation,FALSE
+GO:0036089,5.753838271,cleavage furrow formation,FALSE
+GO:0034113,5.726094422,heterotypic cell cell adhesion,FALSE
+GO:0090091,5.719453502,positive regulation of extracellular matrix disassembly,FALSE
+GO:0006284,5.710560579,base excision repair,FALSE
+GO:1901798,5.705132968,positive regulation of signal transduction by p53 class mediator,FALSE
+GO:0075525,5.656383802,viral translational termination reinitiation,FALSE
+GO:0032467,5.64228262,positive regulation of cytokinesis,FALSE
+GO:1903204,5.638182482,negative regulation of oxidative stress induced neuron death,FALSE
+GO:0040001,5.627787395,establishment of mitotic spindle localization,FALSE
+GO:1905382,5.626787073,positive regulation of snrna transcription by rna polymerase ii,FALSE
+GO:1990090,5.618784828,cellular response to nerve growth factor stimulus,FALSE
+GO:0035509,5.603997268,negative regulation of myosin light chain phosphatase activity,FALSE
+GO:0043044,5.59979166,chromatin remodeling,FALSE
+GO:0000077,5.582328651,dna damage checkpoint signaling,FALSE
+GO:0010529,5.543482722,negative regulation of transposition,FALSE
+GO:0045910,5.535887252,negative regulation of dna recombination,FALSE
+GO:0006298,5.492680047,mismatch repair,FALSE
+GO:0032206,5.455287649,positive regulation of telomere maintenance,FALSE
+GO:0017015,5.427564982,regulation of transforming growth factor beta receptor signaling pathway,TRUE
+GO:0002159,5.410730881,desmosome assembly,FALSE
+GO:0042325,5.408588434,regulation of phosphorylation,FALSE
+GO:0000380,5.394222759,"alternative mrna splicing, via spliceosome",FALSE
+GO:0045815,5.388330519,"positive regulation of gene expression, epigenetic",FALSE
+GO:0048754,5.381460929,branching morphogenesis of an epithelial tube,FALSE
+GO:0000381,5.352053612,"regulation of alternative mrna splicing, via spliceosome",FALSE
+GO:0033148,5.326421617,positive regulation of intracellular estrogen receptor signaling pathway,FALSE
+GO:0075522,5.320170369,ires dependent viral translational initiation,FALSE
+GO:0007183,5.315218629,smad protein complex assembly,TRUE
+GO:0050847,5.312869202,progesterone receptor signaling pathway,FALSE
+GO:0006397,5.304130765,mrna processing,FALSE
+GO:0006260,5.299400009,dna replication,TRUE
+GO:0008543,5.285619921,fibroblast growth factor receptor signaling pathway,TRUE
+GO:0019985,5.270295856,translesion synthesis,FALSE
+GO:0001516,5.260850618,prostaglandin biosynthetic process,FALSE
+GO:0038092,5.248426838,nodal signaling pathway,FALSE
+GO:1904294,5.241101453,positive regulation of erad pathway,FALSE
+GO:0042274,5.240994411,ribosomal small subunit biogenesis,FALSE
+GO:0006282,5.236731884,regulation of dna repair,FALSE
+GO:0010718,5.215309484,positive regulation of epithelial to mesenchymal transition,TRUE
+GO:0051096,5.207783446,positive regulation of helicase activity,FALSE
+GO:0090400,5.197899718,stress induced premature senescence,FALSE
+GO:1904667,5.191440836,negative regulation of ubiquitin protein ligase activity,FALSE
+GO:0009048,5.190061647,dosage compensation by inactivation of x chromosome,FALSE
+GO:0034058,5.178739145,endosomal vesicle fusion,FALSE
+GO:0043627,5.177827542,response to estrogen,TRUE
+GO:0038189,5.15805184,neuropilin signaling pathway,FALSE
+GO:1902416,5.156801123,positive regulation of mrna binding,FALSE
+GO:0034351,5.151766159,negative regulation of glial cell apoptotic process,FALSE
+GO:0010811,5.146985076,positive regulation of cell substrate adhesion,FALSE
+GO:0043570,5.136282083,maintenance of dna repeat elements,FALSE
+GO:0002218,5.112723484,activation of innate immune response,FALSE
+GO:1904378,5.111480718,maintenance of unfolded protein involved in erad pathway,FALSE
+GO:0031571,5.110673157,mitotic g1 dna damage checkpoint signaling,FALSE
+GO:0001837,5.104810849,epithelial to mesenchymal transition,FALSE
+GO:0032508,5.102204047,dna duplex unwinding,TRUE
+GO:0051058,5.096380753,negative regulation of small gtpase mediated signal transduction,FALSE
+GO:0007076,5.089137736,mitotic chromosome condensation,FALSE
+GO:0072583,5.083530774,clathrin dependent endocytosis,FALSE
+GO:0006412,5.066004832,translation,FALSE
+GO:0031860,5.062724482,telomeric 3 overhang formation,FALSE
+GO:1904354,5.035810296,negative regulation of telomere capping,FALSE
+GO:0048254,5.021153158,snorna localization,FALSE
+GO:0035148,5.020579034,tube formation,FALSE
+GO:0106077,5.016435748,histone succinylation,FALSE
+GO:0045647,5.004793026,negative regulation of erythrocyte differentiation,FALSE
+GO:0046833,5.000737764,positive regulation of rna export from nucleus,FALSE
+GO:0007254,4.98555769,JNK cascade,FALSE
+GO:0072429,4.983522683,response to intra s dna damage checkpoint signaling,FALSE
+GO:0000723,4.983325667,telomere maintenance,FALSE
+GO:0006289,4.97481311,nucleotide excision repair,TRUE
+GO:2000147,4.960310447,positive regulation of cell motility,FALSE
+GO:0051403,4.958883793,stress activated mapk cascade,FALSE
+GO:0030032,4.946121386,lamellipodium assembly,FALSE
+GO:2000643,4.937123903,positive regulation of early endosome to late endosome transport,FALSE
+GO:0051972,4.928815846,regulation of telomerase activity,FALSE
+GO:0090267,4.928765659,positive regulation of mitotic cell cycle spindle assembly checkpoint,FALSE
+GO:0048660,4.928722479,regulation of smooth muscle cell proliferation,FALSE
+GO:0048255,4.924906277,mrna stabilization,FALSE
+GO:0030579,4.920095432,ubiquitin dependent smad protein catabolic process,FALSE
+GO:0009299,4.917175114,mrna transcription,FALSE
+GO:1903936,4.91582744,cellular response to sodium arsenite,FALSE
+GO:0034333,4.914355043,adherens junction assembly,FALSE
+GO:0044344,4.91389571,cellular response to fibroblast growth factor stimulus,FALSE
+GO:1903608,4.901189564,protein localization to cytoplasmic stress granule,FALSE
+GO:0010596,4.895115705,negative regulation of endothelial cell migration,FALSE
+GO:0002040,4.891274053,sprouting angiogenesis,FALSE

@@ -1,0 +1,101 @@
+,norm,GO name,Cancer Related
+GO:1902416,6.349075347,positive regulation of mrna binding,FALSE
+GO:0042104,6.258961869,positive regulation of activated t cell proliferation,FALSE
+GO:0075525,6.112377884,viral translational termination reinitiation,FALSE
+GO:0006265,5.937680585,dna topological change,TRUE
+GO:0009314,5.896633805,response to radiation,FALSE
+GO:0050766,5.691685518,positive regulation of phagocytosis,FALSE
+GO:0040001,5.679607312,establishment of mitotic spindle localization,FALSE
+GO:0043550,5.637064895,regulation of lipid kinase activity,FALSE
+GO:0090502,5.579958298,"rna phosphodiester bond hydrolysis, endonucleolytic",FALSE
+GO:1900245,5.575609447,positive regulation of mda 5 signaling pathway,FALSE
+GO:0048260,5.558052228,positive regulation of receptor mediated endocytosis,TRUE
+GO:1902570,5.530010711,protein localization to nucleolus,FALSE
+GO:0008584,5.410268714,male gonad development,TRUE
+GO:0043987,5.396380942,histone h3 s10 phosphorylation,FALSE
+GO:0051403,5.39208774,stress activated mapk cascade,FALSE
+GO:1990966,5.365635756,atp generation from poly adp d ribose,FALSE
+GO:1903204,5.35958718,negative regulation of oxidative stress induced neuron death,FALSE
+GO:0043388,5.29238851,positive regulation of dna binding,FALSE
+GO:0009299,5.266880496,mrna transcription,FALSE
+GO:0000380,5.255573784,"alternative mrna splicing, via spliceosome",FALSE
+GO:0016572,5.241970804,histone phosphorylation,FALSE
+GO:0000012,5.222940721,single strand break repair,FALSE
+GO:0050900,5.188411876,leukocyte migration,FALSE
+GO:0010501,5.171484932,rna secondary structure unwinding,FALSE
+GO:0045019,5.166362049,negative regulation of nitric oxide biosynthetic process,FALSE
+GO:0046833,5.144245776,positive regulation of rna export from nucleus,FALSE
+GO:0007254,5.13688806,jnk cascade,FALSE
+GO:0010165,5.133905986,response to x ray,FALSE
+GO:0051292,5.117413962,nuclear pore complex assembly,FALSE
+GO:1901164,5.115949661,negative regulation of trophoblast cell migration,FALSE
+GO:0051103,5.084358354,dna ligation involved in dna repair,FALSE
+GO:0048041,5.072781979,focal adhesion assembly,FALSE
+GO:0019369,5.069069263,arachidonic acid metabolic process,FALSE
+GO:1903800,5.064962333,positive regulation of production of mirnas involved in gene silencing by mirna,TRUE
+GO:0036462,5.040618328,trail activated apoptotic signaling pathway,FALSE
+GO:0010942,5.033796183,positive regulation of cell death,TRUE
+GO:0006297,4.986954989,"nucleotide excision repair, dna gap filling",FALSE
+GO:0033673,4.975070128,negative regulation of kinase activity,FALSE
+GO:0031665,4.972684302,negative regulation of lipopolysaccharide mediated signaling pathway,FALSE
+GO:0045429,4.954311039,positive regulation of nitric oxide biosynthetic process,TRUE
+GO:0071922,4.954072431,regulation of cohesin loading,FALSE
+GO:0072656,4.934277271,maintenance of protein location in mitochondrion,FALSE
+GO:0072655,4.934277271,establishment of protein localization to mitochondrion,FALSE
+GO:1903936,4.93246394,cellular response to sodium arsenite,FALSE
+GO:0032691,4.925538941,negative regulation of interleukin 1 beta production,FALSE
+GO:0070212,4.905096411,protein poly adp ribosylation,FALSE
+GO:0000731,4.880728554,dna synthesis involved in dna repair,TRUE
+GO:1904646,4.87765925,cellular response to amyloid beta,FALSE
+GO:1900246,4.87439361,positive regulation of rig i signaling pathway,FALSE
+GO:0002218,4.868351311,activation of innate immune response,FALSE
+GO:0045859,4.848443361,regulation of protein kinase activity,FALSE
+GO:1990000,4.834465948,amyloid fibril formation,TRUE
+GO:0090023,4.830316063,positive regulation of neutrophil chemotaxis,FALSE
+GO:1903799,4.825935217,negative regulation of production of mirnas involved in gene silencing by mirna,TRUE
+GO:0006096,4.818406013,glycolytic process,FALSE
+GO:1901990,4.799733273,regulation of mitotic cell cycle phase transition,TRUE
+GO:1900026,4.790739344,positive regulation of substrate adhesion dependent cell spreading,TRUE
+GO:0006970,4.78459005,response to osmotic stress,FALSE
+GO:0002230,4.762864396,positive regulation of defense response to virus by host,FALSE
+GO:0032930,4.751268876,positive regulation of superoxide anion generation,FALSE
+GO:0007275,4.749833108,multicellular organism development,FALSE
+GO:1990120,4.739590497,messenger ribonucleoprotein complex assembly,FALSE
+GO:0097340,4.729889736,inhibition of cysteine type endopeptidase activity,FALSE
+GO:0031297,4.725716103,replication fork processing,FALSE
+GO:0043117,4.720674252,positive regulation of vascular permeability,FALSE
+GO:0030174,4.720006809,regulation of dna dependent dna replication initiation,FALSE
+GO:1905618,4.715177338,positive regulation of mirna mediated inhibition of translation,FALSE
+GO:1903608,4.702052206,protein localization to cytoplasmic stress granule,FALSE
+GO:0030032,4.697523027,lamellipodium assembly,FALSE
+GO:1903146,4.696771335,regulation of autophagy of mitochondrion,FALSE
+GO:1901537,4.695028838,positive regulation of dna demethylation,FALSE
+GO:0042026,4.694547977,protein refolding,FALSE
+GO:0097428,4.694240069,protein maturation by iron sulfur cluster transfer,FALSE
+GO:0044344,4.672091908,cellular response to fibroblast growth factor stimulus,FALSE
+GO:0038061,4.666074325,nik/nf kappab signaling,FALSE
+GO:0031053,4.664137496,primary mirna processing,TRUE
+GO:0006446,4.635191193,regulation of translational initiation,FALSE
+GO:0070934,4.629748757,crd mediated mrna stabilization,FALSE
+GO:0030193,4.619588322,regulation of blood coagulation,FALSE
+GO:2000378,4.605947495,negative regulation of reactive oxygen species metabolic process,FALSE
+GO:0001516,4.593600213,prostaglandin biosynthetic process,FALSE
+GO:0006413,4.586004179,translational initiation,FALSE
+GO:0007569,4.584565706,cell aging,TRUE
+GO:1990869,4.579670302,cellular response to chemokine,FALSE
+GO:0019885,4.576481169,antigen processing and presentation of endogenous peptide antigen via mhc class i,FALSE
+GO:0043552,4.575712274,positive regulation of phosphatidylinositol 3 kinase activity,TRUE
+GO:1904706,4.571620868,negative regulation of vascular associated smooth muscle cell proliferation,TRUE
+GO:0030154,4.564890081,cell differentiation,FALSE
+GO:0034501,4.564588466,protein localization to kinetochore,FALSE
+GO:0051496,4.559347433,positive regulation of stress fiber assembly,TRUE
+GO:0007254,4.556362081,JNK cascade,FALSE
+GO:0060337,4.547501515,type i interferon signaling pathway,TRUE
+GO:2000774,4.544609806,positive regulation of cellular senescence,FALSE
+GO:0010811,4.544345179,positive regulation of cell substrate adhesion,FALSE
+GO:0000165,4.540656919,MAPK cascade,TRUE
+GO:0070102,4.537837255,interleukin 6 mediated signaling pathway,TRUE
+GO:0043967,4.533080296,histone h4 acetylation,TRUE
+GO:0045786,4.532704749,negative regulation of cell cycle,TRUE
+GO:0032481,4.517151016,positive regulation of type i interferon production,FALSE
+GO:0006303,4.516045479,double strand break repair via nonhomologous end joining,FALSE
