@@ -15,23 +15,25 @@ from collections import deque
 
 
 def profile(func):
-    """ Decorator
+    """Decorator
     Execute cProfile
     """
+
     def _f(*args, **kwargs):
         print("\n<<<---")
         pr = cProfile.Profile()
         pr.enable()
         res = func(*args, **kwargs)
         p = pstats.Stats(pr)
-        p.strip_dirs().sort_stats('cumtime').print_stats(20)
+        p.strip_dirs().sort_stats("cumtime").print_stats(20)
         print("\n--->>>")
         return res
+
     return _f
 
 
 def total_size(obj, verbose=False):
-    """ Returns approximate memory size"""
+    """Returns approximate memory size"""
     seen = set()
 
     def sizeof(o):
@@ -53,55 +55,62 @@ def total_size(obj, verbose=False):
 
 
 def malloc(func):
-    """ Decorator
+    """Decorator
     Execute tracemalloc
     """
+
     def _f(*args, **kwargs):
         print("\n<<<---")
         tracemalloc.start()
         res = func(*args, **kwargs)
         snapshot = tracemalloc.take_snapshot()
-        top_stats = snapshot.statistics('lineno')
+        top_stats = snapshot.statistics("lineno")
         print("[ Top 10 ]")
         for i, stat in enumerate(top_stats[:10]):
             frame = stat.traceback[0]
             filename = os.sep.join(frame.filename.split(os.sep)[-2:])
-            print("#%s: %s:%s: %.1f KiB"
-                  % (i, filename, frame.lineno, stat.size / 1024))
+            print(
+                "#%s: %s:%s: %.1f KiB" % (i, filename, frame.lineno, stat.size / 1024)
+            )
             print(linecache.getline(frame.filename, frame.lineno).strip())
             # print(stat)
         print("--->>>\n")
         return res
+
     return _f
 
 
 def malloc_diff(func):
-    """ Decorator
+    """Decorator
     Execute tracemalloc
     """
+
     def _f(*args, **kwargs):
         print("\n<<<---")
         tracemalloc.start()
         snapshot1 = tracemalloc.take_snapshot()
         res = func(*args, **kwargs)
         snapshot2 = tracemalloc.take_snapshot()
-        top_stats = snapshot2.compare_to(snapshot1, 'lineno')
+        top_stats = snapshot2.compare_to(snapshot1, "lineno")
         print("[ Top 10 differences]")
         for stat in top_stats[:10]:
             print(stat)
         print("--->>>\n")
         return res
+
     return _f
 
 
 def mute(func):
-    """ Decorator
+    """Decorator
     Make stdout silent
     """
+
     def _f(*args, **kwargs):
-        sys.stdout = open(os.devnull, 'w')
+        sys.stdout = open(os.devnull, "w")
         res = func(*args, **kwargs)
         sys.stdout.close()
         sys.stdout = sys.__stdout__
         return res
+
     return _f

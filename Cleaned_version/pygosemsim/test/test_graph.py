@@ -10,6 +10,7 @@ import networkx as nx
 
 from pygosemsim import graph
 
+
 @unittest.skip("")
 class TestGraph(unittest.TestCase):
     @classmethod

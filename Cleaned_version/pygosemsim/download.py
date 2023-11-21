@@ -1,4 +1,3 @@
-
 import urllib.request
 from pathlib import Path
 
@@ -7,16 +6,14 @@ resource_dir = Path(__file__).resolve().parent / "_resources"
 
 
 def initialize():
-    """Initialize downloaded resource directory
-    """
+    """Initialize downloaded resource directory"""
     if not resource_dir.exists():
         resource_dir.mkdir()
         print(f"Resource directory created: {resource_dir}")
 
 
 def clear():
-    """Remove all downloaded resources
-    """
+    """Remove all downloaded resources"""
     initialize()
     for p in resource_dir.glob("*"):
         p.unlink()
@@ -24,8 +21,7 @@ def clear():
 
 
 def download(filename, url, decode="utf-8"):
-    """Download resources via HTTP
-    """
+    """Download resources via HTTP"""
     initialize()
     chunk_size = 1024 * 1024  # 1 MB
     print(f"Download started: {url}")
@@ -62,8 +58,7 @@ def obo(name="go-basic"):
     go_obo_url = f"http://purl.obolibrary.org/obo/go/{filename}"
     dest = resource_dir / filename
     if dest.exists():
-        raise ValueError(
-            f"{filename} already exists in the resource directory")
+        raise ValueError(f"{filename} already exists in the resource directory")
     download(filename, go_obo_url)
 
 
@@ -72,6 +67,5 @@ def gaf(name="goa_human"):
     go_obo_url = f"http://geneontology.org/gene-associations/{filename}"
     dest = resource_dir / filename
     if dest.exists():
-        raise ValueError(
-            f"{filename} already exists in the resource directory")
+        raise ValueError(f"{filename} already exists in the resource directory")
     download(filename, go_obo_url, decode=False)

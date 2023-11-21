@@ -13,11 +13,25 @@ class TestSimilarity(unittest.TestCase):
     def test_lca(self):
         G = graph.GoGraph()
         G.add_nodes_from(range(15))
-        G.add_edges_from([
-            (0, 1), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7),
-            (0, 2), (2, 8), (8, 9), (9, 3), (2, 10), (10, 11), (11, 4),
-            (12, 13), (13, 14)
-        ])
+        G.add_edges_from(
+            [
+                (0, 1),
+                (1, 3),
+                (1, 4),
+                (1, 5),
+                (1, 6),
+                (1, 7),
+                (0, 2),
+                (2, 8),
+                (8, 9),
+                (9, 3),
+                (2, 10),
+                (10, 11),
+                (11, 4),
+                (12, 13),
+                (13, 14),
+            ]
+        )
 
         # No pre-calculated desc_count
         with self.assertRaises(exception.PGSSInvalidOperation):
@@ -63,9 +77,6 @@ class TestSimilarity(unittest.TestCase):
         self.assertEqual(similarity.norm_resnik(G, 0, 0), 0)
         self.assertEqual(similarity.pekar(G, 0, 0), None)
         self.assertEqual(similarity.lin(G, 0, 0), None)  # Zero division
-
-
-
 
     """
     @classmethod

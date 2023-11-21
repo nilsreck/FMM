@@ -1,4 +1,3 @@
-
 from pathlib import Path
 import re
 
@@ -25,6 +24,7 @@ class GoGraph(nx.DiGraph):
             Information content calculation requires precalc lower bounds.
             see `pygosemsim.similarity.precalc_lower_bounds`
     """
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.alt_ids = {}  # Alternative IDs
@@ -34,17 +34,12 @@ class GoGraph(nx.DiGraph):
 
     def require(self, desc):
         if desc not in self.descriptors:
-            raise exception.PGSSInvalidOperation(
-                "'{}' is required.".format(desc))
+            raise exception.PGSSInvalidOperation("'{}' is required.".format(desc))
 
 
 def parse_block(lines):
-    """Parse a Term block
-    """
-    term = {
-        "alt_id": [],
-        "relationship": []
-    }
+    """Parse a Term block"""
+    term = {"alt_id": [], "relationship": []}
     for line in lines:
         m = re.search(splitkv, line)
         assert m, f"unexpected line: {line}"
@@ -67,8 +62,7 @@ def parse_block(lines):
 
 
 def blocks_iter(lines):
-    """Iterate Term (and Typedef) blocks
-    """
+    """Iterate Term (and Typedef) blocks"""
     type_ = None
     content = []
     for line in lines:
@@ -117,7 +111,7 @@ def from_obo_lines(lines, ignore_obsolete=True):
         attr = {
             "name": term["name"],
             "namespace": term["namespace"],
-            "is_obsolete": obso
+            "is_obsolete": obso,
         }
         G.add_node(term["id"], **attr)
         for rel in term["relationship"]:

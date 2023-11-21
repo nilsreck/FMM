@@ -1,4 +1,3 @@
-
 from collections import Counter
 import math
 
@@ -8,8 +7,7 @@ from pygosemsim import exception
 
 
 def precalc_lower_bounds(G):
-    """Pre-calculate the number of lower bounds of the graph nodes
-    """
+    """Pre-calculate the number of lower bounds of the graph nodes"""
     G.lower_bounds = Counter()
     for n in G:
         G.lower_bounds[n] += 1
@@ -217,8 +215,7 @@ def pekar(G, term1, term2):
     mica = lowest_common_ancestor(G, term1, term2)
     ac = nx.shortest_path_length(G, source=mica, target=term1)
     bc = nx.shortest_path_length(G, source=mica, target=term2)
-    root = max(nx.ancestors(G, mica),
-               key=lambda x: G.lower_bounds[x], default=mica)
+    root = max(nx.ancestors(G, mica), key=lambda x: G.lower_bounds[x], default=mica)
     rootc = nx.shortest_path_length(G, source=root, target=mica)
     try:
         return round(rootc / (ac + bc + rootc), 3)

@@ -1,5 +1,3 @@
-
-
 class PGSSException(Exception):
     """Base exception class"""
 

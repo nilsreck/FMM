@@ -1,4 +1,3 @@
-
 import gzip
 from pathlib import Path
 
@@ -30,7 +29,7 @@ def from_gaf_lines(lines, qualified_only=True):
                 "db_object_symbol": row[2],
                 "db_object_name": row[9],
                 "db_object_type": row[11],
-                "annotation": {}
+                "annotation": {},
             }
         qualifiers = row[3].split("|")
         if qualified_only:
