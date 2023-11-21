@@ -7101,7 +7101,7 @@ def Gen_GO_Common_Space(Cancer_list, Normal_tissue_list, Cell_type_list, dim):
         # Add more information to the final data frame:
 
         Matrix_GO_Gene = pd.read_csv(
-            f"./Cleaned_version/Data/_Matrix_Genes_GO_BP_PPI.csv",
+            f"../Cleaned_version/Data/_Matrix_Genes_GO_BP_PPI.csv",
             index_col=0,
             dtype={0: str},
         )
