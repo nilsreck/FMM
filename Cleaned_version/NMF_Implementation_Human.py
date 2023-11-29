@@ -4,7 +4,6 @@ This is a proof of concept of an NMF with the multiplicative update rules.
 
 import numpy as np
 import pandas as pd
-from scipy.linalg import svd
 import matplotlib.pyplot as plt
 
 
