@@ -1389,6 +1389,7 @@ def Annotate_Gene_Space(
     save_path = "../Cleaned_version/Data/Embeddings/"
 
     counter = 0
+    GO_Matrix = None
 
     # Get the annotations:
 
@@ -1580,6 +1581,8 @@ def Embedding_Structure(
 
     # Get the structure of the spaces:
 
+    path_Cancer = None
+    path_Control = None
     for cancer, tissue, cell in zip(
         Cancer_type_list, Normal_Tissue_list, Cell_type_list
     ):
@@ -1862,6 +1865,7 @@ def Relative_Error(
     save_cosine = "../Cleaned_version/Data/FMM/"
 
     control = 0
+    bp = None
 
     # Calculate the Relative error:
 
@@ -1926,10 +1930,10 @@ def Relative_Error(
 
                 else:
                     print(annotation)
-                    BP = json.load(open("Data/gene2go_Human_PPIGO_Specific_BP.json"))
+                    bp = json.load(open("Data/gene2go_Human_PPIGO_Specific_BP.json"))
 
                 number_GO = 3
-                annotation_list = [name for sublist in BP.values() for name in sublist]
+                annotation_list = [name for sublist in bp.values() for name in sublist]
                 occurance_of_each_annotation_in_network = Counter(annotation_list)
                 terms_filtering = [
                     key
