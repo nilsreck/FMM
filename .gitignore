@@ -165,6 +165,4 @@ cython_debug/
 *.txt
 
 # Downloaded files
-Cleaned_version/Data/Semantic_Human.csv
-Cleaned_version/Data/_Matrix_Genes_GO_BP_PPI.csv
-Cleaned_version/Data/Human_Biogrid_Genes_PPI_
+Cleaned_version/Data
