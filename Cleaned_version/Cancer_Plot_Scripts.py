@@ -1760,21 +1760,15 @@ def Common_GO_Terms(
 
         # Intersecions:
 
-        # Common_Annotations = GO_terms_filtered_Cancer.intersections(
-        #    GO_terms_filtered_Control
-        # )
-
-        common_annotations = [
-            term
-            for term in GO_terms_filtered_Cancer
-            if term in GO_terms_filtered_Control
-        ]
+        Common_Annotations = GO_terms_filtered_Cancer.intersection(
+            GO_terms_filtered_Control
+        )
 
         if annotation == "GO":
-            pd.DataFrame(common_annotations).to_csv(f"{save}Common_Set_{tissue}.csv")
+            pd.DataFrame(Common_Annotations).to_csv(f"{save}Common_Set_{tissue}.csv")
 
         else:
-            pd.DataFrame(common_annotations).to_csv(
+            pd.DataFrame(Common_Annotations).to_csv(
                 f"{save}Common_Set_{tissue}_{annotation}.csv"
             )
 
