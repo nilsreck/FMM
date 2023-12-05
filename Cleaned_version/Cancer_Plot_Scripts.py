@@ -1437,10 +1437,10 @@ def Annotate_Gene_Space(
         # Delete annotations without genes (> 0):
 
         GO_Cancer = GO_Gene_Matrix_Cancer.sum(axis=0)
-        filter_Cancer = list(GO_Cancer[GO_Cancer > 0].index)
+        filter_Cancer = set(GO_Cancer[GO_Cancer > 0].index)
 
         GO_Control = GO_Gene_Matrix_Control.sum(axis=0)
-        filter_Control = list(GO_Control[GO_Control > 0].index)
+        filter_Control = set(GO_Control[GO_Control > 0].index)
 
         GO_Gene_Matrix_Cancer = GO_Gene_Matrix_Cancer[filter_Cancer]
         GO_Gene_Matrix_Control = GO_Gene_Matrix_Control[filter_Control]
@@ -1751,12 +1751,12 @@ def Common_GO_Terms(
         # Cancer:
 
         GO_Cancer = GO_Gene_Matrix_Cancer.sum(axis=0)
-        GO_terms_filtered_Cancer = list(GO_Cancer[GO_Cancer >= 3].index)
+        GO_terms_filtered_Cancer = set(GO_Cancer[GO_Cancer >= 3].index)
 
         # Control:
 
         GO_Control = GO_Gene_Matrix_Control.sum(axis=0)
-        GO_terms_filtered_Control = list(GO_Control[GO_Control >= 3].index)
+        GO_terms_filtered_Control = set(GO_Control[GO_Control >= 3].index)
 
         # Intersecions:
 
@@ -5687,7 +5687,7 @@ def Prepare_Annotations(network_path, GO_Matrix, cancer, tissue, cell, Type="Can
     GO_Matrix_filt = GO_Matrix[GO_Matrix.index.isin(genes_list)]
 
     GO = GO_Matrix_filt.sum(axis=0)
-    filter_list = list(GO[GO > 0].index)
+    filter_list = set(GO[GO > 0].index)
 
     GO_Matrix_final = GO_Matrix_filt[filter_list]
     GO_Matrix_final = GO_Matrix_final.loc[genes_list]
