@@ -1575,9 +1575,9 @@ def Relative_Error(Cancer_type_list, Normal_Tissue_list, Cell_type_list, dimensi
         
         # Save the corresponding Errors:
         
-        with open(f'{save_cosine}Relative_Cancer_{cancer}_{matrix}.txt', "w") as fp:
+        with open(f'{save_cosine}Relative_Cancer_{cancer}_{matrix}_{annotation}.txt', "w") as fp:
             json.dump(Cancer_list, fp)
-        with open(f'{save_cosine}Relative_Control_{tissue}_{cell}_{matrix}.txt', "w") as fp:
+        with open(f'{save_cosine}Relative_Control_{tissue}_{cell}_{matrix}_{annotation}.txt', "w") as fp:
             json.dump(Control_list, fp)
         
         control = control + 2
@@ -1615,9 +1615,9 @@ def Plot_Relative_Error(Cancer_type_list, Normal_Tissue_list, Cell_type_list, di
         
         if annotation == "GO":
         
-            with open(f'{save_cosine}Relative_Cancer_{cancer}_{matrix}.txt', "r") as fp:
+            with open(f'{save_cosine}Relative_Cancer_{cancer}_{matrix}_{annotation}.txt', "r") as fp:
                 Cancer_Error = json.load(fp)
-            with open(f'{save_cosine}Relative_Control_{tissue}_{cell}_{matrix}.txt', "r") as fp:
+            with open(f'{save_cosine}Relative_Control_{tissue}_{cell}_{matrix}_{annotation}.txt', "r") as fp:
                 Control_Error = json.load(fp)    
         
         else:
@@ -2252,8 +2252,8 @@ def moving_in_the_space():
         
     # Set the number of shifted or stable annotations based on 2std:
     
-    percentile_moving = {'lung' : 53 , 'breast' : 58, 'colon' : 68, 'prostate' : 49}
-    percentile_stable = {'lung' : 15 , 'breast' : 29, 'colon' : 22, 'prostate' : 26}  
+    percentile_moving = {'lung' : 75 , 'breast' : 58, 'colon' : 68, 'prostate' : 49}
+    percentile_stable = {'lung' : 15 , 'breast' : 29, 'colon' : 68, 'prostate' : 26}  
     
     # To save the values of the enrichment analyses
 
@@ -2271,7 +2271,7 @@ def moving_in_the_space():
         number_of_draws_stable = percentile_stable[i]
 
         print('\n')
-        Ranking = pd.read_csv(f'/media/sergio/sershiosdisk/Scripts/Main_Code/Cleaned_version/Data/Rank_movement_{i}_PPMI_Leaf.csv',index_col=0,names=['norm'],header=0)
+        Ranking = pd.read_csv(f'./Cleaned_version/Data/Rank_movement_{i}_PPMI_Leaf.csv',index_col=0,names=['norm'],header=0)
 
         # Observed by random
         population_size = len(Ranking)
