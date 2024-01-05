@@ -1722,7 +1722,7 @@ def Common_GO_Terms(
 
         else:
             GO_Matrix = pd.read_csv(
-                f"{path}_Matrix_Genes_GO_BP_PPI.csv", index_col=0, dtype={0: str}
+                f"/Data/_Matrix_Genes_GO_BP_PPI.csv", index_col=0, dtype={0: str}
             )
             GO_Matrix.index = GO_Matrix.index.astype(str)
 

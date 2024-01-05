@@ -33,7 +33,9 @@ def Create_Tissue_Specific_Network(
         pd.read_csv(f"{save_path}Cancer_{Cancer_type}_Genes.csv", dtype={0: str})["0"]
     )
     control_genes = list(
-        pd.read_csv(f'{save_path}Control_{Normal_Tissue}_{Cell_type}_Genes.csv', dtype={0: str})["0"]
+        pd.read_csv(
+            os.path.join(save_path, f"Cancer_{Cancer_type}_Genes.csv"), dtype={0: str}
+        )["0"]
     )
 
     # Load the human PPI network:
