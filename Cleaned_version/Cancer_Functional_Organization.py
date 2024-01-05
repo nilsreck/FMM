@@ -70,6 +70,7 @@ Cancer_Plot_Scripts.Generate_Gene_Embeddings(
 Cancer_Plot_Scripts.Annotate_Gene_Space(
     Cancer_list, Normal_tissue_list, Control_list, dimension_list, Annotation="Leaf"
 )
+
 # 5 Generate the FMMs:
 
 Cancer_Plot_Scripts.Embedding_Structure(
@@ -135,7 +136,7 @@ Cancer_Plot_Scripts.Plot_Relative_Error(
     dimension_list,
     comparison_list,
     matrix="PPMI",
-    annotation="Leaf",
+    annotation="GO",
 )
 
 # Based on these results we consider the following dimensionaity as the optimal:

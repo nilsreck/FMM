@@ -1389,6 +1389,7 @@ def Annotate_Gene_Space(
     save_path = "../Cleaned_version/Data/Embeddings/"
 
     counter = 0
+    GO_Matrix = None
 
     # Get the annotations:
 
@@ -1580,6 +1581,8 @@ def Embedding_Structure(
 
     # Get the structure of the spaces:
 
+    path_Cancer = None
+    path_Control = None
     for cancer, tissue, cell in zip(
         Cancer_type_list, Normal_Tissue_list, Cell_type_list
     ):
@@ -1719,7 +1722,7 @@ def Common_GO_Terms(
 
         else:
             GO_Matrix = pd.read_csv(
-                f"/Data/_Matrix_Genes_GO_BP_PPI.csv", index_col=0, dtype={0: str}
+                f"{path}_Matrix_Genes_GO_BP_PPI.csv", index_col=0, dtype={0: str}
             )
             GO_Matrix.index = GO_Matrix.index.astype(str)
 
@@ -1853,9 +1856,10 @@ def Relative_Error(
 
     # Path:
 
-    save_cosine = "./Cleaned_version/Data/FMM/"
+    save_cosine = "../Cleaned_version/Data/FMM/"
 
     control = 0
+    bp = None
 
     # Calculate the Relative error:
 
@@ -1920,10 +1924,10 @@ def Relative_Error(
 
                 else:
                     print(annotation)
-                    BP = json.load(open("Data/gene2go_Human_PPIGO_Specific_BP.json"))
+                    bp = json.load(open("Data/gene2go_Human_PPIGO_Specific_BP.json"))
 
                 number_GO = 3
-                annotation_list = [name for sublist in BP.values() for name in sublist]
+                annotation_list = [name for sublist in bp.values() for name in sublist]
                 occurance_of_each_annotation_in_network = Counter(annotation_list)
                 terms_filtering = [
                     key
@@ -2006,7 +2010,7 @@ def Plot_Relative_Error(
 ):
     # Path:
 
-    save_cosine = "Data/FMM/"
+    save_cosine = "../Cleaned_version/Data/FMM/"
     row_control = 0
     label_count = 0
 
@@ -2376,9 +2380,9 @@ def Test_Functional_Organization(
 
     # Paths:
 
-    save_cosine = "./Cleaned_version/Data/FMM/"
-    functional_path = "./Cleaned_version/Data/"
-    Filter_path = "./Cleaned_version/Data/"
+    save_cosine = "../Cleaned_version/Data/FMM/"
+    functional_path = "../Cleaned_version/Data/"
+    Filter_path = "../Cleaned_version/Data/"
 
     # Calculate the Semantic Similarity:
 
@@ -2845,9 +2849,9 @@ def Movement_Ranking(
 ):
     # Paths:
 
-    cosine_path = "./Cleaned_version/Data/FMM/"
-    Filter_path = "./Cleaned_version/Data/"
-    movement_path = "./Cleaned_version/Data/"
+    cosine_path = "../Cleaned_version/Data/FMM/"
+    Filter_path = "../Cleaned_version/Data/"
+    movement_path = "../Cleaned_version/Data/"
 
     for cancer, tissue, cell in zip(
         Cancer_type_list, Normal_Tissue_list, Cell_type_list
@@ -2897,7 +2901,7 @@ def Global_moving_in_the_space():
     # Load our set of cancer-related annotations:
 
     with open(
-        f"./Cleaned_version/Data/enriched_in_cancer_gobp_terms_cosmic.txt", "r"
+        f"../Cleaned_version/Data/enriched_in_cancer_gobp_terms_cosmic.txt", "r"
     ) as fp:
         cancer_related_go_terms = json.load(fp)
 
@@ -2907,7 +2911,7 @@ def Global_moving_in_the_space():
 
     for i in cancers:
         Ranking = pd.read_csv(
-            f"./Cleaned_version/Data/Rank_movement_{i}_PPMI_Leaf.csv",
+            f"../Cleaned_version/Data/Rank_movement_{i}_PPMI_Leaf.csv",
             index_col=0,
             names=["norm"],
             header=0,
@@ -2928,7 +2932,7 @@ def moving_in_the_space():
     # Load our set of cancer-related annotations:
 
     with open(
-        f"./Cleaned_version/Data/enriched_in_cancer_gobp_terms_cosmic.txt", "r"
+        f"../Cleaned_version/Data/enriched_in_cancer_gobp_terms_cosmic.txt", "r"
     ) as fp:
         cancer_related_go_terms = json.load(fp)
 
@@ -2954,7 +2958,7 @@ def moving_in_the_space():
 
         print("\n")
         Ranking = pd.read_csv(
-            f"/media/sergio/sershiosdisk/Scripts/Main_Code/Cleaned_version/Data/Rank_movement_{i}_PPMI_Leaf.csv",
+            f"../Cleaned_version/Data/Rank_movement_{i}_PPMI_Leaf.csv",
             index_col=0,
             names=["norm"],
             header=0,
@@ -3054,8 +3058,8 @@ def Query_GO_terms(Normal_tissue_list):
     on the annotation file that is used (and also on the embeddings) it should be recomputed with the new ranking if needed.
     """
 
-    movement_path = "./Cleaned_version/Data/"
-    path_rank = "./Cleaned_version/Data/"
+    movement_path = "../Cleaned_version/Data/"
+    path_rank = "../Cleaned_version/Data/"
 
     for tissue in Normal_tissue_list:
         file = pd.read_csv(f"{movement_path}top_100_moving_{tissue}.csv")
@@ -7002,10 +7006,10 @@ def Gen_GO_Common_Space(Cancer_list, Normal_tissue_list, Cell_type_list, dim):
 
     # Paths:
 
-    network_path = "./Cleaned_version/Data/Embeddings/"
-    gene_GO_path = "./Cleaned_version/Data/"
-    moving_path = "./Cleaned_version/Data/"
-    FMM_path = "./Cleaned_version/Data/FMM/"
+    network_path = "../Cleaned_version/Data/Embeddings/"
+    gene_GO_path = "../Cleaned_version/Data/"
+    moving_path = "../Cleaned_version/Data/"
+    FMM_path = "../Cleaned_version/Data/FMM/"
 
     # For each combination:
 
@@ -7101,7 +7105,7 @@ def Gen_GO_Common_Space(Cancer_list, Normal_tissue_list, Cell_type_list, dim):
         # Add more information to the final data frame:
 
         Matrix_GO_Gene = pd.read_csv(
-            f"./Cleaned_version/Data/_Matrix_Genes_GO_BP_PPI.csv",
+            f"../Cleaned_version/Data/_Matrix_Genes_GO_BP_PPI.csv",
             index_col=0,
             dtype={0: str},
         )
@@ -7165,9 +7169,9 @@ def Distance_Check(GO_Gene_Matrix, distances):
 def Demonstrate_Gene_GO_Org(Cancer_list, Normal_tissue_list, Cell_type_list, dim):
     # Paths:
 
-    network_path = "./Cleaned_version/Data/"
-    gene_GO_path = "./Cleaned_version/Data/"
-    matrix_path = "./Cleaned_version/Data/"
+    network_path = "../Cleaned_version/Data/"
+    gene_GO_path = "../Cleaned_version/Data/"
+    matrix_path = "../Cleaned_version/Data/"
 
     # Open the file:
 
@@ -7627,7 +7631,7 @@ def Query_Common_gene_set(Normal_tissue_list):
 
     # Paths:
 
-    gene_GO_path = "./Cleaned_version/Data/"
+    gene_GO_path = "../Cleaned_version/Data/"
 
     # For each tissue:
 
@@ -7843,8 +7847,8 @@ def Do_Overlapping_Table(Normal_tissue_list):
 
 
 def Do_Fold_Enrichment_Complete(Normal_tissue_list):
-    path_rank = "./Cleaned_version/Data/"
-    gene_GO_path = "./Cleaned_version/Data/"
+    path_rank = "../Cleaned_version/Data/"
+    gene_GO_path = "../Cleaned_version/Data/"
 
     # Open the file:
 
