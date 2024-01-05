@@ -1987,13 +1987,10 @@ def Relative_Error(
 
         # Save the corresponding Errors:
 
-        with open(
-            f"{save_cosine}Relative_Cancer_{cancer}_{matrix}_{annotation}.txt", "w"
-        ) as fp:
+        with open(f"{save_cosine}Relative_Cancer_{cancer}_{matrix}.txt", "w") as fp:
             json.dump(Cancer_list, fp)
         with open(
-            f"{save_cosine}Relative_Control_{tissue}_{cell}_{matrix}_{annotation}.txt",
-            "w",
+            f"{save_cosine}Relative_Control_{tissue}_{cell}_{matrix}.txt", "w"
         ) as fp:
             json.dump(Control_list, fp)
 
@@ -2037,13 +2034,10 @@ def Plot_Relative_Error(
         # Load the relatives errors:
 
         if annotation == "GO":
-            with open(
-                f"{save_cosine}Relative_Cancer_{cancer}_{matrix}_{annotation}.txt", "r"
-            ) as fp:
+            with open(f"{save_cosine}Relative_Cancer_{cancer}_{matrix}.txt", "r") as fp:
                 Cancer_Error = json.load(fp)
             with open(
-                f"{save_cosine}Relative_Control_{tissue}_{cell}_{matrix}_{annotation}.txt",
-                "r",
+                f"{save_cosine}Relative_Control_{tissue}_{cell}_{matrix}.txt", "r"
             ) as fp:
                 Control_Error = json.load(fp)
 
@@ -2944,8 +2938,8 @@ def moving_in_the_space():
 
     # Set the number of shifted or stable annotations based on 2std:
 
-    percentile_moving = {"lung": 75, "breast": 58, "colon": 68, "prostate": 49}
-    percentile_stable = {"lung": 15, "breast": 29, "colon": 68, "prostate": 26}
+    percentile_moving = {"lung": 53, "breast": 58, "colon": 68, "prostate": 49}
+    percentile_stable = {"lung": 15, "breast": 29, "colon": 22, "prostate": 26}
 
     # To save the values of the enrichment analyses
 
