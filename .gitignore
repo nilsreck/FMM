@@ -166,3 +166,10 @@ cython_debug/
 
 # Downloaded files
 Cleaned_version/Data
+
+# environments
+*.yaml
+*.yml
+
+#stuff
+*BackupCode
