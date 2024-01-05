@@ -136,7 +136,7 @@ Cancer_Plot_Scripts.Plot_Relative_Error(
     dimension_list,
     comparison_list,
     matrix="PPMI",
-    annotation="GO",
+    annotation="Leaf",
 )
 
 # Based on these results we consider the following dimensionaity as the optimal:
