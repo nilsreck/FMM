@@ -164,5 +164,3 @@ cython_debug/
 *.png
 *.txt
 
-# Downloaded files
-Cleaned_version/Data
