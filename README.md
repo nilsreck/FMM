@@ -5,7 +5,7 @@ paper can be found [here](https://academic.oup.com/bioinformatics/article/39/5/b
 
 
 ## Data Availability
-For reasons of reproducibility, we have saved the data from the original paper in a separate Google drive folder. This can be found under this link: https://drive.google.com/drive/folders/1SlZ1QixgQu0DoCJabR_cMzjiJv6aM7Pr?usp=sharing. 
+For reasons of reproducibility, we have saved the data from the original paper in a separate Google drive folder. This can be found under [this link](https://drive.google.com/drive/folders/1SlZ1QixgQu0DoCJabR_cMzjiJv6aM7Pr?usp=sharing). 
 The folder contains the same files that were used in the original paper. 
 The files: `Human_Biogrid_Adj_PPI_.npy`, `Matrix_Genes_GO_BP_PPI.csv`, `Semantic_Human.csv`, `enriched_in_cancer_gobp_terms_cosmic.txt` 
 correspond to the human PPI network, the GO BP annotations and the semantic similarity of the GO BP terms please download first and then save in the ./Data folder.
