@@ -1,0 +1,5 @@
+
+rerun-incomplete: True
+printshellcmds: True
+use-conda: True
+profile: "profiles/default"

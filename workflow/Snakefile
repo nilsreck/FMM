@@ -1,0 +1,25 @@
+from snakemake.utils import min_version
+import os
+
+min_version("7.17.1")
+
+configfile: "./config.yaml"
+
+include: "rules/common.smk"
+include: "rules/steps.smk"
+
+
+if "configurations" in config:
+
+    rule eval:
+        input:
+            error_plot=get_error_plot(annotation, data_path),
+            enrichments=data_path+"/cancer_enrichments_2std.svg",
+            movement_tables=get_movement_table(Normal_tissue_list, data_path),
+            organization=data_path+"/Organization_Common_Space.txt",
+            fold_rank=data_path+"/Fold_Rank_Table_Dos.txt",
+            predictions=get_predictions(Normal_tissue_list, data_path),
+        resources:
+            mem_mb="1gb",
+            nodes=1,
+            runtime=1000,

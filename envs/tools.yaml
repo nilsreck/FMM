@@ -1,0 +1,13 @@
+name: tools
+channels:
+  - bioconda
+  - main
+  - conda-forge
+dependencies:
+  - matplotlib-base
+  - matplotlib-venn=0.11.10
+  - numpy
+  - pandas=1.4.4
+  - python=3.8.0
+  - scipy
+  - scikit-learn

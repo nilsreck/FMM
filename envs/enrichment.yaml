@@ -1,0 +1,12 @@
+name: enrichment
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python>=3.8
+  - biopython>=1.70
+  - matplotlib
+  - numpy
+  - pandas=1.4.4
+  - scipy
