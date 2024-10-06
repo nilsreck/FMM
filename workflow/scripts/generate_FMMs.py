@@ -163,7 +163,7 @@ for cancer, tissue, control in zip(
             [cancer],
             [tissue],
             [control],
-            [int(open(snakemake.input.dimension, "w").name.split("/")[-1].split("_")[-1])],
+            [int(open(snakemake.input.dimension, "w").name.split("_")[-1])],
             snakemake.params.data_path,
             False,
             "PPMI",

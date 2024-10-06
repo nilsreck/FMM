@@ -304,7 +304,7 @@ Generate_Gene_Embeddings(
     snakemake.params.Cancer_list,
     snakemake.params.Normal_tissue_list,
     snakemake.params.Control_list,
-    [int(open(snakemake.input.dimension, "w").name.split("/")[-1].split("_")[-1])],
+    [int(open(snakemake.input.dimension, "w").name.split("_")[-1])],
     snakemake.params.data_path,
     max_iter=snakemake.params.max_iter,
     verbose=50,

@@ -202,6 +202,7 @@ def moving_in_the_space(data_dir, annotation):
         plt.xticks(range(4), categories, fontsize=16)
         plt.yticks(fontsize=16)
         plt.legend(bbox_to_anchor=(1, 1), loc="upper left", fontsize=16)
+        plt.title("A", fontdict=None, loc='center', pad=None)
         plt.tight_layout()
         plt.savefig(f"{data_dir}/cancer_enrichments_2std.svg", dpi=500)
 
@@ -218,7 +219,10 @@ def moving_in_the_space(data_dir, annotation):
         plt.ylabel('% cancer-related annotations', fontsize=24 , fontweight='bold')
         plt.xticks(x_indices, categories, fontsize=24)
         plt.yticks(fontsize=24)
-        plt.tight_layout()
+        #plt.legend(bbox_to_anchor=(1, 1), loc="upper left", fontsize=16)
+        plt.legend(fontsize=16)
+        plt.title("A", fontdict=None, loc='center', pad=None)
+        #plt.tight_layout()
         plt.savefig(f"{data_dir}/cancer_enrichments_2std.svg", dpi=500)
 
     #plt.show()
