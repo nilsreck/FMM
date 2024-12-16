@@ -7,10 +7,36 @@ from multiprocessing import Pool
 # 3. Generate the Gene embeddings:
 
 def solve(process):
-    s = process[0:2]
-    inputs = process[2:-1]
-    Solver = SNMTF(*s)
-    return Solver.Solve_MUR(*inputs)
+
+    Solver = SNMTF(*process[0:2])
+    dim = process[4]
+    save_path = process[5]
+    network = process[6]
+    init = "SVD"
+    ppmi_file = process[2] 
+    PPMI = np.load(ppmi_file, allow_pickle=True)
+    adj_file = process[3]
+    adj = np.load(adj_file, allow_pickle=True)
+    ppmi_matrix = f"PPMI_{process[-1]}"
+    adj_matrix = f"Adj_{process[-1]}"
+
+    Solver.Solve_MUR(
+        PPMI,
+        dim,
+        save_path,
+        network,
+        ppmi_matrix,
+        init)
+    
+    Solver.Solve_MUR(
+        adj,
+        dim,
+        save_path,
+        network,
+        adj_matrix,
+        init)
+
+    return 0
               
 
 class SNMTF(object):
@@ -204,62 +230,92 @@ def Generate_Gene_Embeddings(
 
     # Generate the embeddings:
 
+    Processes = []
+
     for cancer, tissue, cell in zip(
         Cancer_type_list, Normal_Tissue_list, Cell_type_list
     ):
-        Solver = SNMTF(max_iter, verbose)
+        # Solver = SNMTF(max_iter, verbose)
 
         # Load the information:
 
-        Cancer_adj = np.load(
-            f"{network_path}Cancer_{cancer}_PPI.npy", allow_pickle=True
-        )
-        Control_adj = np.load(
-            f"{network_path}Control_{tissue}_{cell}_PPI.npy", allow_pickle=True
-        )
+        # Cancer_adj = np.load(
+        #     f"{network_path}Cancer_{cancer}_PPI.npy", allow_pickle=True
+        # )
+        # Control_adj = np.load(
+        #     f"{network_path}Control_{tissue}_{cell}_PPI.npy", allow_pickle=True
+        # )
 
-        Cancer_PPMI = np.load(
-            f"{network_path}Cancer_PPMI_{cancer}.npy", allow_pickle=True
-        )
-        Control_PPMI = np.load(
-            f"{network_path}Control_PPMI_{tissue}_{cell}.npy", allow_pickle=True
-        )
+        # Cancer_PPMI = np.load(
+        #     f"{network_path}Cancer_PPMI_{cancer}.npy", allow_pickle=True
+        # )
+        # Control_PPMI = np.load(
+        #     f"{network_path}Control_PPMI_{tissue}_{cell}.npy", allow_pickle=True
+        # )
+
+        Cancer_adj = f"{network_path}Cancer_{cancer}_PPI.npy"
+        Control_adj = f"{network_path}Control_{tissue}_{cell}_PPI.npy"
+
+        Cancer_PPMI = f"{network_path}Cancer_PPMI_{cancer}.npy"
+        Control_PPMI = f"{network_path}Control_PPMI_{tissue}_{cell}.npy"
+
 
         # Do the embeddings:
 
-        Cancer_PPMI_process = (max_iter, verbose,
+        
+        Processes.append((
+                max_iter, 
+                verbose,
                 Cancer_PPMI,
-                dimension_list[0],
-                save_path,
-                f"PPI_{cancer}",
-                "PPMI_Cancer",
-                "SVD")
-        Cancer_adj_process = (max_iter, verbose,
                 Cancer_adj,
                 dimension_list[0],
                 save_path,
                 f"PPI_{cancer}",
-                "Adj_Cancer",
-                "SVD")
-        Control_PPMI_process = (max_iter, verbose,
+                "Cancer"))
+        Processes.append((
+                max_iter, 
+                verbose,
                 Control_PPMI,
+                Control_adj,
                 dimension_list[0],
                 save_path,
                 f"PPI_{tissue}_{cell}",
-                "PPMI_Control",
-                "SVD")
-        Control_adj_process = (max_iter, verbose,
-                Control_adj, 
-                dimension_list[0],
-                save_path,
-                f"PPI_{tissue}_{cell}",
-                "Adj_Control",
-                "SVD")
+                "Control"))
 
-        with Pool(4) as pool:
-            pool.map(solve, [Cancer_PPMI_process, Cancer_adj_process, Control_PPMI_process, Control_adj_process])          
-            pool.close()
-            pool.join()
+        # Cancer_PPMI_process = (max_iter, verbose,
+        #         Cancer_PPMI,
+        #         dimension_list[0],
+        #         save_path,
+        #         f"PPI_{cancer}",
+        #         "PPMI_Cancer",
+        #         "SVD")
+        # Cancer_adj_process = (max_iter, verbose,
+        #         Cancer_adj,
+        #         dimension_list[0],
+        #         save_path,
+        #         f"PPI_{cancer}",
+        #         "Adj_Cancer",
+        #         "SVD")
+        # Control_PPMI_process = (max_iter, verbose,
+        #         Control_PPMI,
+        #         dimension_list[0],
+        #         save_path,
+        #         f"PPI_{tissue}_{cell}",
+        #         "PPMI_Control",
+        #         "SVD")
+        # Control_adj_process = (max_iter, verbose,
+        #         Control_adj, 
+        #         dimension_list[0],
+        #         save_path,
+        #         f"PPI_{tissue}_{cell}",
+        #         "Adj_Control",
+        #         "SVD")
+
+        # with Pool(4) as pool:
+            # pool.map(solve, [Cancer_PPMI_process, Cancer_adj_process, Control_PPMI_process, Control_adj_process])          
+            # pool.close()
+            # pool.join()
+
         # for dim in dimension_list:
         #     Solver.Solve_MUR(
         #         Cancer_PPMI,
@@ -295,9 +351,14 @@ def Generate_Gene_Embeddings(
         #         init="SVD",
         #     )
 
-        counter = counter + 4
+        # counter = counter + 4
 
-        print(f"{counter}/{len(Cancer_type_list) * 4 * (len(dimension_list))}")
+        # print(f"{counter}/{len(Cancer_type_list) * 4 * (len(dimension_list))}")
+    
+    with Pool(8) as pool:
+        pool.map(solve, Processes)          
+        pool.close()
+        pool.join()
 
 
 Generate_Gene_Embeddings(

@@ -99,8 +99,8 @@ rule generate_embeddings:
         max_iter=max_iter,
         data_path=data_path,
     resources:
-        mem_mb="18gb",
-        nodes=4,
+        mem_mb="32gb",
+        nodes=8,
         runtime=20000,
     log:
         "logs/generate_embeddings{dimension}.log",
@@ -230,7 +230,7 @@ rule optimal_dimensionality:
         data_path=data_path,
         #threads=6,
     resources:
-        mem_mb="16gb",
+        mem_mb="24gb",
         nodes=4,
         runtime=1000,
     log:
