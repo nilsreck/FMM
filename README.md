@@ -19,5 +19,5 @@ Additional Snakemake parameters can be set depending on the system. You can set 
 This pipeline requires three different environments. Yaml files can be found in the "envs" folder. However, only the "snakemake.yaml" needs to be created manually to execute this pipeline. The other two will be created automatically during runtime upon the first execution.
 
 ## Computational Requirements
-Each step of the workflow has different computational requirements and can be found in workflow/rules/steps.smk. The range of required resources reaches from 1 to 6 parallel processes with up to 4 GB of memory for each of these 6 threads. Additionally, the results will take up about 8 additional GB of disc space, and one process requires access to the NCBI website using this URL "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi". 
+Each step of the workflow has different computational requirements and can be found in workflow/rules/steps.smk. The range of required resources reaches from 1 to 6 parallel processes with up to 4 GB of memory for each of these 6 threads. Additionally, the results will take up about 8 additional GB of disc space, and one process requires access to the NCBI eutils found here "https://www.ncbi.nlm.nih.gov/books/NBK25499/". 
 

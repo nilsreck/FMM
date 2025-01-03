@@ -30,7 +30,7 @@ rule generate_networks:
         Cancer_list=Cancer_list,
         data_path=data_path,
     resources:
-        mem_mb="8gb",
+        mem_mb="12gb",
         nodes=1,
         runtime=1000,
     log:
@@ -101,7 +101,7 @@ rule generate_embeddings:
     resources:
         mem_mb="32gb",
         nodes=8,
-        runtime=20000,
+        runtime=15000,
     log:
         "logs/generate_embeddings{dimension}.log",
     conda:
@@ -125,7 +125,7 @@ rule map_annotations:
         dimension_list=dimension_list,
         data_path=data_path,
     resources:
-        mem_mb="8gb",
+        mem_mb="12gb",
         nodes=1,
         runtime=1000,
     log:
@@ -179,7 +179,7 @@ rule filter_FMMs:
     resources:
         mem_mb="6gb",
         nodes=1,
-        runtime=2000,
+        runtime=1000,
     log:
         "logs/filter_FMMs.log",
     conda:
@@ -230,7 +230,7 @@ rule optimal_dimensionality:
         data_path=data_path,
         #threads=6,
     resources:
-        mem_mb="24gb",
+        mem_mb="32gb",
         nodes=4,
         runtime=1000,
     log:
@@ -310,7 +310,7 @@ rule cancer_enrichment:
     resources:
         mem_mb="1gb",
         nodes=1,
-        runtime=70000,
+        runtime=30000,
     log:
         get_enrichment_log()
     conda:
@@ -339,9 +339,9 @@ rule analyze_functional_organization:
         data_path=data_path,
         annotation=annotation,
     resources:
-        mem_mb="16gb",
+        mem_mb="32gb",
         nodes=len(Cancer_list),
-        runtime=20000,
+        runtime=5000,
     log:
         "logs/analyze_functional_organization.log",
     conda:
@@ -362,7 +362,7 @@ rule gene_prediction:
         Normal_tissue_list=Normal_tissue_list,
         data_path=data_path,
     resources:
-        mem_mb="2gb",
+        mem_mb="4gb",
         nodes=1,
         runtime=1000,
     log:

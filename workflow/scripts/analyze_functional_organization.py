@@ -116,7 +116,7 @@ def Distance_GO_Gene(vector_GO, matrix_genes):
     return result_pd_cos
 
 
-def Gen_GO_Common_Space(Cancer_list, Normal_tissue_list, Cell_type_list, dim, data_dir, annotation):
+def Gen_GO_Common_Space(cancer, tissue, cell, dim, data_dir, annotation):
     """
     This functions calculates the cosine distance between the gene/GO common space
     """
@@ -130,139 +130,134 @@ def Gen_GO_Common_Space(Cancer_list, Normal_tissue_list, Cell_type_list, dim, da
 
     # For each combination:
 
-    for cancer, tissue, cell in zip(Cancer_list, Normal_tissue_list, Cell_type_list):
-        # Prepare the paths:
+    # for cancer, tissue, cell in zip(Cancer_list, Normal_tissue_list, Cell_type_list):
+    #     # Prepare the paths:
 
-        # Genes:
+    # Genes:
 
-        genes_Control = f"{gene_GO_path}Control_{tissue}_{cell}_Genes.csv"
-        genes_Cancer = f"{gene_GO_path}Cancer_{cancer}_Genes.csv"
+    genes_Control = f"{gene_GO_path}Control_{tissue}_{cell}_Genes.csv"
+    genes_Cancer = f"{gene_GO_path}Cancer_{cancer}_Genes.csv"
 
-        # Gene embedded coordinates:
+    # Gene embedded coordinates:
 
-        Gene_embedd_Control = (
-            f"{network_path}_P_Matrix_{dim}_PPI_{tissue}_{cell}_PPMI_Control.npy"
-        )
-        Gene_embedd_Cancer = (
-            f"{network_path}_P_Matrix_{dim}_PPI_{cancer}_PPMI_Cancer.npy"
-        )
+    Gene_embedd_Control = (
+        f"{network_path}_P_Matrix_{dim}_PPI_{tissue}_{cell}_PPMI_Control.npy"
+    )
+    Gene_embedd_Cancer = (
+        f"{network_path}_P_Matrix_{dim}_PPI_{cancer}_PPMI_Cancer.npy"
+    )
 
-        # Middle factor:
+    # Middle factor:
 
-        midle_Control = (
-            f"{network_path}_U_Matrix_{dim}_PPI_{tissue}_{cell}_PPMI_Control.npy"
-        )
-        midle_Cancer = (
-            f"{network_path}_U_Matrix_{dim}_PPI_{cancer}_PPMI_Cancer.npy"
-        )
+    midle_Control = (
+        f"{network_path}_U_Matrix_{dim}_PPI_{tissue}_{cell}_PPMI_Control.npy"
+    )
+    midle_Cancer = (
+        f"{network_path}_U_Matrix_{dim}_PPI_{cancer}_PPMI_Cancer.npy"
+    )
 
-        Gene_midle_Control_db = pd.DataFrame(np.load(midle_Control, allow_pickle=True))
-        Gene_midle_Cancer_db = pd.DataFrame(np.load(midle_Cancer, allow_pickle=True))
+    Gene_midle_Control_db = pd.DataFrame(np.load(midle_Control, allow_pickle=True))
+    Gene_midle_Cancer_db = pd.DataFrame(np.load(midle_Cancer, allow_pickle=True))
 
-        # GO embedded coordinates:
+    # GO embedded coordinates:
 
-        GO_embedd_Control = (
-            f"{network_path}_GO_Embeddings_{annotation}_PPI_{tissue}_{cell}_{dim}_PPMI_Control.csv"
-        )
-        GO_embedd_Cancer = (
-            f"{network_path}_GO_Embeddings_{annotation}_PPI_{cancer}_{dim}_PPMI_Cancer.csv"
-        )
+    GO_embedd_Control = (
+        f"{network_path}_GO_Embeddings_{annotation}_PPI_{tissue}_{cell}_{dim}_PPMI_Control.csv"
+    )
+    GO_embedd_Cancer = (
+        f"{network_path}_GO_Embeddings_{annotation}_PPI_{cancer}_{dim}_PPMI_Cancer.csv"
+    )
 
-        # Top moving GO terms:
+    # Top moving GO terms:
 
-        ranking_p = f"{moving_path}Rank_movement_{tissue}_PPMI_{annotation}.csv"
-        Ranking_db = pd.read_csv(ranking_p, index_col=0)
+    ranking_p = f"{moving_path}Rank_movement_{tissue}_PPMI_{annotation}.csv"
+    Ranking_db = pd.read_csv(ranking_p, index_col=0)
 
-        # Load and preprocess the data:
+    # Load and preprocess the data:
 
-        # Cancer:
+    # Cancer:
 
-        Gene_embedd_Cancer_db = pd.DataFrame(
-            np.load(Gene_embedd_Cancer, allow_pickle=True)
-        )
-        genes_Cancer_db = list(pd.read_csv(genes_Cancer)["0"])
-        genes_Cancer_db = [str(i) for i in genes_Cancer_db]
-        Gene_embedd_Cancer_db.index = genes_Cancer_db
-        GO_embedd_Cancer_db = pd.read_csv(GO_embedd_Cancer, index_col=0)
-        GO_embedd_Cancer_db[GO_embedd_Cancer_db < 0] = 0
+    Gene_embedd_Cancer_db = pd.DataFrame(
+        np.load(Gene_embedd_Cancer, allow_pickle=True)
+    )
+    genes_Cancer_db = list(pd.read_csv(genes_Cancer)["0"])
+    genes_Cancer_db = [str(i) for i in genes_Cancer_db]
+    Gene_embedd_Cancer_db.index = genes_Cancer_db
+    GO_embedd_Cancer_db = pd.read_csv(GO_embedd_Cancer, index_col=0)
+    GO_embedd_Cancer_db[GO_embedd_Cancer_db < 0] = 0
 
-        # Coordinates:
+    # Control:
 
-        Gene_Cancer_Coordinates = Gene_embedd_Cancer_db.dot(Gene_midle_Cancer_db)
+    Gene_embedd_Control_db = pd.DataFrame(
+        np.load(Gene_embedd_Control, allow_pickle=True)
+    )
+    genes_Control_db = list(pd.read_csv(genes_Control)["0"])
+    genes_Control_db = [str(i) for i in genes_Control_db]
+    Gene_embedd_Control_db.index = genes_Control_db
+    GO_embedd_Control_db = pd.read_csv(GO_embedd_Control, index_col=0)
+    GO_embedd_Control_db[GO_embedd_Control_db < 0] = 0
 
-        # Control:
+    # Coordinates: 
 
-        Gene_embedd_Control_db = pd.DataFrame(
-            np.load(Gene_embedd_Control, allow_pickle=True)
-        )
-        genes_Control_db = list(pd.read_csv(genes_Control)["0"])
-        genes_Control_db = [str(i) for i in genes_Control_db]
-        Gene_embedd_Control_db.index = genes_Control_db
-        GO_embedd_Control_db = pd.read_csv(GO_embedd_Control, index_col=0)
-        GO_embedd_Control_db[GO_embedd_Control_db < 0] = 0
+    Gene_Cancer_Coordinates = Gene_embedd_Cancer_db.dot(Gene_midle_Cancer_db)
+    Gene_Control_Coordinates = Gene_embedd_Control_db.dot(Gene_midle_Control_db)
 
-        # Coordinates:
+    # Subset GO by the top 100 moving:
 
-        Gene_Control_Coordinates = Gene_embedd_Control_db.dot(Gene_midle_Control_db)
+    vector_Ranking_Cancer = GO_embedd_Cancer_db[Ranking_db.index]
+    vector_Ranking_Control = GO_embedd_Control_db[Ranking_db.index]
 
-        # Subset GO by the top 100 moving:
+    # Calculate distances:
 
-        vector_Ranking_Cancer = GO_embedd_Cancer_db[Ranking_db.index]
-        vector_Ranking_Control = GO_embedd_Control_db[Ranking_db.index]
+    print(f"Calculating distances for {tissue}", flush=True)
+    Cancer_distances = Distance_GO_Gene( vector_Ranking_Cancer, Gene_Cancer_Coordinates)
+    Control_distances = Distance_GO_Gene(vector_Ranking_Control, Gene_Control_Coordinates)
+    print(f"finished distance calculation for {tissue}", flush=True)
 
-        # Calculate distances:
+    # Add more information to the final data frame:
 
-        Cancer_distances = Distance_GO_Gene(
-            vector_Ranking_Cancer, Gene_Cancer_Coordinates
-        )
-        Control_distances = Distance_GO_Gene(
-            vector_Ranking_Control, Gene_Control_Coordinates
-        )
+    Matrix_GO_Gene = pd.read_csv(
+        f"{data_dir}/_Matrix_Genes_GO_BP_PPI.csv",
+        index_col=0,
+        dtype={0: str},
+    )
 
-        # Add more information to the final data frame:
+    Matrix_GO_Gene.index = [str(i) for i in Matrix_GO_Gene.index] # added line to fix access type mismatch when comparing
 
-        Matrix_GO_Gene = pd.read_csv(
-            f"{data_dir}/_Matrix_Genes_GO_BP_PPI.csv",
-            index_col=0,
-            dtype={0: str},
-        )
+    # Cancer:
 
-        Matrix_GO_Gene.index = [str(i) for i in Matrix_GO_Gene.index] # added line to fix access type mismatch when comparing
+    GO_Gene_Matrix_Cancer = Matrix_GO_Gene[
+        Matrix_GO_Gene.index.isin(genes_Cancer_db)
+    ]
+    GO_Gene_Matrix_Cancer.index = [str(i) for i in GO_Gene_Matrix_Cancer.index]
 
-        # Cancer:
+    # Control:        
+    
+    GO_Gene_Matrix_Control = Matrix_GO_Gene[
+        Matrix_GO_Gene.index.isin(genes_Control_db)
+    ]
+    GO_Gene_Matrix_Control.index = [str(i) for i in GO_Gene_Matrix_Control.index]
 
-        GO_Gene_Matrix_Cancer = Matrix_GO_Gene[
-            Matrix_GO_Gene.index.isin(genes_Cancer_db)
-        ]
-        GO_Gene_Matrix_Cancer.index = [str(i) for i in GO_Gene_Matrix_Cancer.index]
+    # Compute the information
 
-        # Control:        
-        
-        GO_Gene_Matrix_Control = Matrix_GO_Gene[
-            Matrix_GO_Gene.index.isin(genes_Control_db)
-        ]
-        GO_Gene_Matrix_Control.index = [str(i) for i in GO_Gene_Matrix_Control.index]
+    Cancer_Cosine_it = Generate_Final_DataFrame(
+        GO_Gene_Matrix_Cancer, Cancer_distances
+    )
+    Control_Cosine_it = Generate_Final_DataFrame(
+        GO_Gene_Matrix_Control, Control_distances
+    )
 
-        # Compute the information
+    # Save the data frame:
 
-        Cancer_Cosine_it = Generate_Final_DataFrame(
-            GO_Gene_Matrix_Cancer, Cancer_distances
-        )
-        Control_Cosine_it = Generate_Final_DataFrame(
-            GO_Gene_Matrix_Control, Control_distances
-        )
-
-        # Save the data frame:
-
-        Cancer_Cosine_it.to_csv(
-            f"{gene_GO_path}Cancer_Gene_GO_dist_{tissue}.csv", header=True, index=True
-        )
-        Control_Cosine_it.to_csv(
-            f"{gene_GO_path}Control_Gene_GO_dist_{tissue}.csv", header=True, index=True
-        )
+    Cancer_Cosine_it.to_csv(
+        f"{gene_GO_path}Cancer_Gene_GO_dist_{tissue}.csv", header=True, index=True
+    )
+    Control_Cosine_it.to_csv(
+        f"{gene_GO_path}Control_Gene_GO_dist_{tissue}.csv", header=True, index=True
+    )
 
 
-def Demonstrate_Gene_GO_Org(Cancer_list, Normal_tissue_list, Cell_type_list, dim, data_dir, annotation):
+def Demonstrate_Gene_GO_Org(cancer, tissue, cell, dim, data_dir, annotation):
     # Paths:
 
     network_path = f"{data_dir}/"
@@ -282,84 +277,86 @@ def Demonstrate_Gene_GO_Org(Cancer_list, Normal_tissue_list, Cell_type_list, dim
         # For each combination:
 
 
-    for cancer, tissue, cell in zip(
-        Cancer_list, Normal_tissue_list, Cell_type_list
-    ):
-        # Load the data:
+    # for cancer, tissue, cell in zip(
+    #     Cancer_list, Normal_tissue_list, Cell_type_list
+    # ):
 
-        # Genes:
+    # Load the data:
 
-        genes_Control = f"{network_path}Control_{tissue}_{cell}_Genes.csv"
-        genes_Cancer = f"{network_path}Cancer_{cancer}_Genes.csv"
+    # Genes:
+
+    genes_Control = f"{network_path}Control_{tissue}_{cell}_Genes.csv"
+    genes_Cancer = f"{network_path}Cancer_{cancer}_Genes.csv"
 
 
-        genes_Cancer_db = list(pd.read_csv(genes_Cancer)["0"])
-        genes_Cancer_db = [str(i) for i in genes_Cancer_db]
-        genes_Control_db = list(pd.read_csv(genes_Control)["0"])
-        genes_Control_db = [str(i) for i in genes_Control_db]
+    genes_Cancer_db = list(pd.read_csv(genes_Cancer)["0"])
+    genes_Cancer_db = [str(i) for i in genes_Cancer_db]
+    genes_Control_db = list(pd.read_csv(genes_Control)["0"])
+    genes_Control_db = [str(i) for i in genes_Control_db]
 
-        # Annotations:
+    # Annotations:
 
-        Matrix_GO_Gene = pd.read_csv(
-            f"{matrix_path}_Matrix_Genes_GO_BP_PPI.csv", index_col=0, dtype={0: str}
-        )
+    Matrix_GO_Gene = pd.read_csv(
+        f"{matrix_path}_Matrix_Genes_GO_BP_PPI.csv", index_col=0, dtype={0: str}
+    )
 
-        Matrix_GO_Gene.index = [str(i) for i in Matrix_GO_Gene.index] # added line to fix access type mismatch when comparing
+    Matrix_GO_Gene.index = [str(i) for i in Matrix_GO_Gene.index] # added line to fix access type mismatch when comparing
 
-        # Cancer annotations:
+    # Cancer annotations:
 
-        GO_Gene_Matrix_Cancer = Matrix_GO_Gene[
-            Matrix_GO_Gene.index.isin(genes_Cancer_db)
-        ]
-        GO_Gene_Matrix_Cancer.index = [str(i) for i in GO_Gene_Matrix_Cancer.index]
+    GO_Gene_Matrix_Cancer = Matrix_GO_Gene[
+        Matrix_GO_Gene.index.isin(genes_Cancer_db)
+    ]
+    GO_Gene_Matrix_Cancer.index = [str(i) for i in GO_Gene_Matrix_Cancer.index]
 
-        # Control annotations:
+    # Control annotations:
 
-        GO_Gene_Matrix_Control = Matrix_GO_Gene[
-            Matrix_GO_Gene.index.isin(genes_Control_db)
-        ]
-        GO_Gene_Matrix_Control.index = [
-            str(i) for i in GO_Gene_Matrix_Control.index
-        ]
+    GO_Gene_Matrix_Control = Matrix_GO_Gene[
+        Matrix_GO_Gene.index.isin(genes_Control_db)
+    ]
+    GO_Gene_Matrix_Control.index = [
+        str(i) for i in GO_Gene_Matrix_Control.index
+    ]
 
-        # Distances:
+    # Distances:
 
-        Cancer_Cosine_it = pd.read_csv(
-            f"{gene_GO_path}Cancer_Gene_GO_dist_{tissue}.csv",
-            index_col=0,
-            dtype={0: str},
-        )
-        Control_Cosine_it = pd.read_csv(
-            f"{gene_GO_path}Control_Gene_GO_dist_{tissue}.csv",
-            index_col=0,
-            dtype={0: str},
-        )
+    Cancer_Cosine_it = pd.read_csv(
+        f"{gene_GO_path}Cancer_Gene_GO_dist_{tissue}.csv",
+        index_col=0,
+        dtype={0: str},
+    )
+    Control_Cosine_it = pd.read_csv(
+        f"{gene_GO_path}Control_Gene_GO_dist_{tissue}.csv",
+        index_col=0,
+        dtype={0: str},
+    )
 
-        Cancer_Cosine_it.index = [str(i) for i in Cancer_Cosine_it.index]
-        Control_Cosine_it.index = [str(i) for i in Control_Cosine_it.index]
+    Cancer_Cosine_it.index = [str(i) for i in Cancer_Cosine_it.index]
+    Control_Cosine_it.index = [str(i) for i in Control_Cosine_it.index]
 
-        Cancer_Cosine_it = Cancer_Cosine_it.drop(
-            ["Group", "Shape", "size", "Min_Dist", "Min_GO"], axis=1
-        )
-        Control_Cosine_it = Control_Cosine_it.drop(
-            ["Group", "Shape", "size", "Min_Dist", "Min_GO"], axis=1
-        )
+    Cancer_Cosine_it = Cancer_Cosine_it.drop(
+        ["Group", "Shape", "size", "Min_Dist", "Min_GO"], axis=1
+    )
+    Control_Cosine_it = Control_Cosine_it.drop(
+        ["Group", "Shape", "size", "Min_Dist", "Min_GO"], axis=1
+    )
 
-        # Compute the sets:
+    # Compute the sets:
 
-        x_cancer, y_cancer = Distance_Check(GO_Gene_Matrix_Cancer, Cancer_Cosine_it)
-        x_control, y_control = Distance_Check(
-            GO_Gene_Matrix_Control, Control_Cosine_it
-        )
+    x_cancer, y_cancer = Distance_Check(GO_Gene_Matrix_Cancer, Cancer_Cosine_it)
+    x_control, y_control = Distance_Check(
+        GO_Gene_Matrix_Control, Control_Cosine_it
+    )
 
-        # Compare distance distributions:
+    # Compare distance distributions:
 
-        p_value_cancer = mannwhitneyu(x_cancer, y_cancer, alternative="less").pvalue
-        p_value_control = mannwhitneyu(
-            x_control, y_control, alternative="less"
-        ).pvalue
+    p_value_cancer = mannwhitneyu(x_cancer, y_cancer, alternative="less").pvalue
+    p_value_control = mannwhitneyu(
+        x_control, y_control, alternative="less"
+    ).pvalue
 
-        return [tissue, p_value_cancer, x_cancer, y_cancer, p_value_control, x_control, y_control]
+    print([tissue, p_value_cancer, p_value_control], flush=True)
+    return [tissue, p_value_cancer, x_cancer, y_cancer, p_value_control, x_control, y_control]
 
             # # Write into the file:
 
@@ -379,14 +376,17 @@ def Demonstrate_Gene_GO_Org(Cancer_list, Normal_tissue_list, Cell_type_list, dim
         ###################################
 
 
+
+log_file = open(snakemake.log[0], "w")
+sys.stdout = log_file
+print("starting analysis", flush=True)
+
 processes = []
-for cancer, tissue, cell in zip(
-        snakemake.params.Cancer_list, snakemake.params.Normal_tissue_list, snakemake.params.Control_list
-    ):
+for cancer, tissue, cell in zip(snakemake.params.Cancer_list, snakemake.params.Normal_tissue_list, snakemake.params.Control_list):
     processes.append((
-            [cancer], 
-            [tissue], 
-            [cell], 
+            cancer, 
+            tissue, 
+            cell, 
             snakemake.params.optimal_dim, 
             snakemake.params.data_path,
             snakemake.params.annotation))
@@ -397,7 +397,7 @@ with Pool(len(processes)) as pool:
     pool.join()
 
 
-with open(gene_GO_path + "Organization_Common_Space.txt", "a") as the_file:
+with open(snakemake.params.data_path + "/Organization_Common_Space.txt", "a") as the_file:
     # Write the columns names in the file:
 
     the_file.write("# Sample" + "\t")
@@ -426,6 +426,8 @@ with open(gene_GO_path + "Organization_Common_Space.txt", "a") as the_file:
         the_file.write(f"{np.mean(y_control)} ({np.std(y_control)})\n")
 
     the_file.close()
+
+log_file.close()
 
 # # Distance between genes and functions:
 # Gen_GO_Common_Space(

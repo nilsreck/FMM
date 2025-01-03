@@ -1,8 +1,24 @@
 import sys
 import numpy as np
 import pandas as pd
+from scipy.stats import hypergeom
 
 # 16. Do the genes predictions and validate them with an enrichment analyses:
+
+def Fold_enriched(Total, Total_succes, sample, sample_succes):
+    expected = (sample * Total_succes) / Total
+
+    if sample_succes >= expected:
+        print("Over")
+        fold = sample_succes / expected
+        p_value = 1 - hypergeom.cdf(sample_succes - 1, Total, Total_succes, sample)
+        return (fold, p_value)
+    else:
+        print("Under")
+        fold = expected / sample_succes
+        p_value = 1 - hypergeom.cdf(sample_succes - 1, Total, Total_succes, sample)
+        return (fold, 1 - p_value)
+
 
 def Do_Fold_Enrichment_Complete(Normal_tissue_list, data_dir):
     path_rank = f"{data_dir}/"

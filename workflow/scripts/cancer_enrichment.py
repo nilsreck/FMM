@@ -4,6 +4,7 @@ import json
 import subprocess
 import numpy as np
 import pandas as pd
+from time import sleep
 from Bio import Entrez
 import matplotlib.pyplot as plt
 from scipy.stats import hypergeom
@@ -56,10 +57,23 @@ def Query_GO_terms(Normal_tissue_list, data_dir, annotation, NCBI_account):
 def search(query, NCBI_account):
     Entrez.email = NCBI_account
     print(query, flush=True)
-    handle = Entrez.esearch(
-        db="pubmed", sort="relevance", retmax="100000", retmode="xml", term=query
-    )
-    results = Entrez.read(handle)
+    max_attempts = 15
+    handled = False
+    attempt = 1
+    while handled == False and attempt <= max_attempts:
+        try:
+            handle = Entrez.esearch(db="pubmed", sort="relevance", retmax="100000", retmode="xml", term=query)
+            results = Entrez.read(handle)
+            handled = True
+        except Exception as error:
+            print(f"\n {error}", flush=True)
+            if attempt <= max_attempts:
+                delay = min((2**(attempt-1)), 5000)
+                print(f"\n retrying in {delay} seconds (attempt {attempt+1}) \n", flush=True)
+                attempt += 1
+                sleep(delay)
+            else:
+                print("\n not trying again \n", flush=True)
     return results
 
 
@@ -114,7 +128,10 @@ sys.stdout = f
 
 Query_GO_terms(Normal_Tissue_list, data_path, annotation, NCBI_account)
 
+print("\n done with GO terms \n", flush=True)
+
 Query_Common_gene_set(Normal_Tissue_list, data_path, NCBI_account) 
 
+print("\n done with gene set \n", flush=True)
 f.close()
 

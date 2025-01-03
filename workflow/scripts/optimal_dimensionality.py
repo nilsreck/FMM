@@ -41,8 +41,6 @@ def Relative_Error(
 
     # Path:
     
-    print(Normal_Tissue_list, flush=True)
-    print(np.version.version, flush=True)
 
     save_cosine = f"{data_dir}/FMM/"
 
@@ -89,32 +87,26 @@ def Relative_Error(
                     f"{save_cosine}Cosine_Cancer_{cancer}_{d1}_{matrix}_{annotation}.csv",
                     index_col=0,
                 )
-                print("1", flush=True)
                 Cancer_Structure_2 = pd.read_csv(
                     f"{save_cosine}Cosine_Cancer_{cancer}_{d2}_{matrix}_{annotation}.csv",
                     index_col=0,
                 )
-                print("2", flush=True)
 
                 Control_Structure_1 = pd.read_csv(
                     f"{save_cosine}Cosine_Control_{tissue}_{cell}_{d1}_{matrix}_{annotation}.csv",
                     index_col=0,
                 )
-                print("3", flush=True)
                 Control_Structure_2 = pd.read_csv(
                     f"{save_cosine}Cosine_Control_{tissue}_{cell}_{d2}_{matrix}_{annotation}.csv",
                     index_col=0,
                 )
-                print("4", flush=True)
 
             # If we calculate it not only with the common set:
 
             if filtered == True:
                 if annotation == "GO":
-                    print("Nop")
-
+                    bp = json.load(open(f"{data_dir}/gene2go_Human_PPIGO_Specific_BP.json"))
                 else:
-                    print(annotation, flush=True)
                     bp = json.load(open(f"{data_dir}/gene2go_Human_PPIGO_Specific_BP.json"))
 
                 number_GO = 3
@@ -125,33 +117,26 @@ def Relative_Error(
                     for key, values in occurance_of_each_annotation_in_network.items()
                     if values >= number_GO
                 ]
-                print(5,flush =True)
                 terms_filtering_1 = list(
                     set(terms_filtering).intersection(set(Cancer_Structure_1.index))
                 )
 
-                print(6,flush =True)
                 terms_filtering_2 = list(
                     set(terms_filtering).intersection(set(Control_Structure_1.index))
                 )
 
-                print(7,flush =True)
                 Cancer_Structure_1 = Cancer_Structure_1.loc[
                     terms_filtering_1, terms_filtering_1
                 ]
-                print(8,flush =True)
                 Cancer_Structure_2 = Cancer_Structure_2.loc[
                     terms_filtering_1, terms_filtering_1
                 ]
-                print(9,flush =True)
                 Control_Structure_1 = Control_Structure_1.loc[
                     terms_filtering_2, terms_filtering_2
                 ]
-                print("a",flush =True)
                 Control_Structure_2 = Control_Structure_2.loc[
                     terms_filtering_2, terms_filtering_2
                 ]
-                print("b",flush =True)
 
             # If we calculate it for the common set of GO terms:
 
@@ -162,35 +147,25 @@ def Relative_Error(
                 Control_Structure_1 = Control_Structure_1.loc[common_list, common_list]
                 Control_Structure_2 = Control_Structure_2.loc[common_list, common_list]
 
-            print("c",flush =True)
-            print(Cancer_Structure_1.shape,flush =True)
-            print(Cancer_Structure_2.shape,flush =True)
             # Calculate the relative error:
 
             norm_R1_Cancer = np.linalg.norm(Cancer_Structure_1, ord="fro")
-            print("x",flush =True)
             norm_R2_Cancer = np.linalg.norm(Cancer_Structure_2, ord="fro")
-            print("d",flush =True)
 
             norm_R1_Control = np.linalg.norm(Control_Structure_1, ord="fro")
             norm_R2_Control = np.linalg.norm(Control_Structure_2, ord="fro")
-            print("e",flush =True)
 
             Error_Cancer = Cancer_Structure_1 - Cancer_Structure_2
             Error_Control = Control_Structure_1 - Control_Structure_2
-            print("f",flush =True)
 
             norm_Cancer = np.linalg.norm(Error_Cancer, ord="fro")
             rel_erR1_Cancer = norm_Cancer / max(norm_R1_Cancer, norm_R2_Cancer)
-            print("g",flush =True)
 
             norm_Control = np.linalg.norm(Error_Control, ord="fro")
             rel_erR1_Control = norm_Control / max(norm_R1_Control, norm_R2_Control)
-            print("h",flush =True)
 
             Cancer_list.append(rel_erR1_Cancer) 
             Control_list.append(rel_erR1_Control) 
-            print("i_", comparison_list, Cancer_list,flush =True)
 
         # Save the corresponding Errors:
 
@@ -246,10 +221,9 @@ def Parallel_Error(
 
     f = open(snakemake.log[0], "w")
     sys.stdout = f
-#
+
     print(Process, flush=True)
     print(multiprocessing.cpu_count(), flush=True)
-    #n_cores = multiprocessing.cpu_count()
     n_cores = snakemake.resources.nodes
     pool1 = multiprocessing.Pool(processes=n_cores)
     pool1.daemon = False
@@ -264,7 +238,6 @@ comparison_list = []
 dim_list=snakemake.params.dimension_list
 for i in range(len(dim_list)-1):
     comparison_list.append(f"{dim_list[i]}-{dim_list[i+1]}")
-print(comparison_list)
 Parallel_Error(
     snakemake.params.Cancer_list,
     snakemake.params.Normal_tissue_list,

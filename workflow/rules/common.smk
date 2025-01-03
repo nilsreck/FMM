@@ -2,21 +2,6 @@
 import os
 import subprocess
 
-# configurations = config.get("configurations", dict())
-
-# Control_list = configurations["Control_list"]
-# Normal_tissue_list = configurations["Normal_tissue_list"]
-# Cancer_list = configurations["Cancer_list"]
-# plot_network = configurations["plot_network"]
-# dimension_list = configurations["dimension_list"]
-# max_iter = configurations["max_iter"]
-# annotation = configurations["Annotation"]
-# optimal_dim = configurations["optimal_dim"]
-
-# data_path = os.path.abspath("../Data")
-# resource_path = os.path.abspath("./resources")
-
-
 def get_genes(Control_list, Normal_tissue_list, Cancer_list, data_path):
     inputs = []
     for control, tissue, cancer in zip(Control_list, Normal_tissue_list, Cancer_list):
