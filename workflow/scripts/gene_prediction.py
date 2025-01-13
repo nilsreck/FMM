@@ -37,14 +37,7 @@ def Do_Fold_Enrichment_Complete(Normal_tissue_list, data_dir):
             # Load movement and choose the most moving:
 
             rank = pd.read_csv(f"{path_rank}Rank_movement_{tissue}_PPMI_Leaf.csv")
-            moving_GO = rank[rank["0"] > (np.mean(rank["0"]) + 2 * np.std(rank["0"]))][
-                "Unnamed: 0"
-            ]
-
-            # Load the bibliography information:
-
-            counter_list = pd.read_csv(f"{gene_GO_path}Cancer_Count_{tissue}.csv")
-            counter_list = counter_list.drop_duplicates("name")
+            moving_GO = rank[rank["0"] > (np.mean(rank["0"]) + 2 * np.std(rank["0"]))]["Unnamed: 0"]
 
             # Load cosines:
 
@@ -66,15 +59,11 @@ def Do_Fold_Enrichment_Complete(Normal_tissue_list, data_dir):
 
             # Subset the data:
 
-            gene_common = Cancer_Cosine_it.index[
-                Cancer_Cosine_it.index.isin(Control_Cosine_it.index)
-            ]
+            gene_common = Cancer_Cosine_it.index[Cancer_Cosine_it.index.isin(Control_Cosine_it.index)]
             Cancer_Cosine_it_com = Cancer_Cosine_it.loc[gene_common]
             Control_Cosine_it_com = Control_Cosine_it.loc[gene_common]
 
-            moving_GO = list(
-                set(Cancer_Cosine_it_com.columns).intersection(set(moving_GO))
-            )
+            moving_GO = list(set(Cancer_Cosine_it_com.columns).intersection(set(moving_GO)))
 
             # Filter the moving GO terms (based on the distribution)
 
@@ -92,7 +81,7 @@ def Do_Fold_Enrichment_Complete(Normal_tissue_list, data_dir):
             move_abs = abs(move)
             Restuls_abs = pd.DataFrame(move_abs.T.max())
             Restuls_abs["GO"] = move_abs.T.idxmax()
-            Restuls_abs["Gene"] = list(Restuls_abs.index)
+            Restuls_abs["Gene"] = list(Restuls_abs.index.astype(int))
             Restuls_abs = Restuls_abs.sort_values(by=0, ascending=False)
             Restuls_abs = Restuls_abs.reset_index(drop=True)
 
@@ -107,45 +96,38 @@ def Do_Fold_Enrichment_Complete(Normal_tissue_list, data_dir):
             Restuls_abs_top = Restuls_abs.head(round(len(Restuls_abs) * 5 / 100))
             Restuls_abs_tail = Restuls_abs.tail(round(len(Restuls_abs) * 5 / 100))
 
+            # Load the bibliography information:
+
+            counter_list = pd.read_csv(f"{gene_GO_path}Cancer_Count_{tissue}.csv")
+            counter_list = counter_list.drop_duplicates("name")
+
             # To save the predictions:
 
-            gene_names = counter_list[
-                counter_list.initial_alias.isin(Restuls_abs_top.Gene)
-            ]
+            gene_names = counter_list[counter_list.initial_alias.isin(Restuls_abs_top.Gene)]
             gene_names = gene_names.drop(["Unnamed: 0", "initial_alias"], axis=1)
             gene_names = gene_names.drop_duplicates("name")
             gene_names = gene_names.reset_index(drop=True)
-
-            gene_names.to_csv(
-                f"{path_rank}Predictions_Rank_{tissue}.csv", header=True, index=True
-            )
+            
+            gene_names.to_csv(f"{path_rank}Predictions_Rank_{tissue}.csv", header=True, index=True)
 
             # Get the total set
 
             genes_succes = list(counter_list[counter_list.Counts > 0]["initial_alias"])
-            genes_succes = [str(i) for i in genes_succes]
+            genes_succes = [int(i) for i in genes_succes]
 
             Total_succes = len(genes_succes)
             Total = len(counter_list)
 
             # Do the enrichment analyses:
 
-            set_stable_succes = len(
-                set(Restuls_abs_tail.Gene).intersection(set(genes_succes))
-            )
+            set_stable_succes = len(set(Restuls_abs_tail.Gene).intersection(set(genes_succes)))
             set_stable_total = len(Restuls_abs_tail)
 
-            set_moving_succes = len(
-                set(Restuls_abs_top.Gene).intersection(set(genes_succes))
-            )
+            set_moving_succes = len(set(Restuls_abs_top.Gene).intersection(set(genes_succes)))
             set_moving_total = len(Restuls_abs_top)
 
-            fold_stb, p_value_stb = Fold_enriched(
-                Total, Total_succes, set_stable_total, set_stable_succes
-            )
-            fold_mv, p_value_mv = Fold_enriched(
-                Total, Total_succes, set_moving_total, set_moving_succes
-            )
+            fold_stb, p_value_stb = Fold_enriched(Total, Total_succes, set_stable_total, set_stable_succes)
+            fold_mv, p_value_mv = Fold_enriched(Total, Total_succes, set_moving_total, set_moving_succes)
 
             the_file.write(f"{tissue}\t")
             the_file.write(f"{round(fold_mv, 3)} ({p_value_mv})\t")
@@ -155,5 +137,9 @@ def Do_Fold_Enrichment_Complete(Normal_tissue_list, data_dir):
 
         the_file.close()
 
+f = open(snakemake.log[0], "w")
+sys.stdout = f
 
 Do_Fold_Enrichment_Complete(snakemake.params.Normal_tissue_list, snakemake.params.data_path)
+
+f.close()
