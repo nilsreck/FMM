@@ -25,13 +25,37 @@ configurations:
   max_iter: 1000
   Annotation: "Leaf"
   optimal_dim: 200
+  number_similar: 500
+  # the size of groups of similar annotations for the analysis of lin semantic similarity 
+  annotation_minimum: 3
+  # minimal number of genes for an annotation to be considered during optimal dimensionality calculation
+  # the annotations for this are loaded from "gene2go_Human_PPIGO_Specific_BP.json" instead of
+  # "_Matrix_Genes_GO_BP_PPI.csv" like all other rules.
+  use_common_for_dimensionality: False
+  use_common_for_similarity: True
+  filtered: True
+  # use_common and filtered decide whether only genes coomon among cancer and control datasets are used.
+  # by default this varies between rules, and only some allow for customization, 
+  # hence three different parameters are used.
+  shifted_group_size:
+    lung:
+    breast:
+    colon:
+    prostate:
+  stable_group_size:
+    lung:
+    breast:
+    colon:
+    prostate:
+  # group sizes for each group for "visualization" of cancer relatedness.
+  # in regards to movement between embedding spaces. 
+  # If left empty, the same group size as for the predictions are visualized.
   network_access_wrapper: 
-    "{script}"
-  # this option exists for the sake of preparing a network connection on clusters with controlled access.
+    "{script}" 
+  # this option for an additional shell script wrapper exists for the sake of preparing 
+  # a network connection on clusters with controlled access.
   # it must be written in linux shell script and contain "{script}",
   # which will be replaced by the command that starts the network dependent process
-  # optional fields are {log} (replaced by the absolute path of the log file) and 
-  # {workdir} (replaced by the absolute path of the working directory).
-  # "conda run -p '$CONDA_PREFIX' {script};" is required if a change of environment took place.
-  NCBI_account: "" 
-  # email of NCBI account to be used
+  # optional fields are {log} and {workdir}
+  # "conda run -p '$CONDA_PREFIX' {script};" is required if a change of environment took place
+  NCBI_account: ""

@@ -1,4 +1,4 @@
-name: enrichment
+name: literature
 channels:
   - conda-forge
   - bioconda

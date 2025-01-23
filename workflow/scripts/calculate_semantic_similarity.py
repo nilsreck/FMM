@@ -1,65 +1,131 @@
 import sys
 import json
+import numpy as np
 import pandas as pd
-import multiprocessing
+from multiprocessing import Pool
+from pygosemsim import graph, similarity
+
 
 # 7. Evaluate if the embedding spaces are organized using the FMM
 
-def Parallel_Functional_Organization(
-    Cancer_type_list,
-    Normal_Tissue_list,
-    Cell_type_list,
-    dimension_list,
-    data_dir,
-    matrix="PPMI",
-    filtered=True,
-    Common=False,
-    Jaccard=False,
-    number_similar=500,
-    annotation="GO",
+def solve(process):
+    Test_Functional_Organization(*process)
+
+
+def Calculate_Semantic_Similarity(
+    dim, save_cosine, common_list=[], filtered=True, Common=False, number_similar=500
 ):
     """
-    This function paralelize the computation of Test_Functional_Organization.
+    This function calculates the semantic similarity between the top500 GO terms pairs that are closer in an embedding space.
 
-        Inputs:
-
-                 - Cancer_type_list      : string list, Name of the Cancer.
-                 - Normal_Tissue_list   : string list, Name of the normal tissue.
-                 - Cell_type_list       : string list, Name of the normal cell in the tissue.
-                 - dimension_list       : int list, list with the dimensions of the embedding spaces.
-                 - matrix               : string, network matrix representation.
-                 - filtered             : booleran, if true the filtering of the matrix is based on its individual list
-                 - Common               : booleran, if true the filtering of the matrix is based on the common cancer/control list.
+         Inputs:
+                 - similarity     : pandas DataFrame, with the similarity between the pairs.
+                 - dim            : int, dimension of the embedding space.
+                 - save_cosine    : string, path to the cosine/cosine matrix of the annotations.
+                 - common_list    : list, list to filter the GO terms in the cosine/cosine matrix.
+                 - filtered       : booleran, if true the filtering of the matrix is based on its individual list
+                 - Common         : booleran, if true the filtering of the matrix is based on the common cancer/control list.
+                 - number_similar : int, top pairs to calculate its semantic similarity.
     """
 
-    # Similarity:
+    # Load the cosine matrix:
 
-    Process = []
+    cos_matrix_1 = pd.read_csv(save_cosine, index_col=0)
 
-    print(str(number_similar))
+    if filtered == True:
+        # Filtered by its individual set:
 
-    for i in range(len(Cancer_type_list)):
-        Process.append(
-            (
-                [Cancer_type_list[i]],
-                [Normal_Tissue_list[i]],
-                [Cell_type_list[i]],
-                dimension_list,
-                data_dir,
-                matrix,
-                filtered,
-                Common,
-                Jaccard,
-                number_similar,
-                annotation,
-            )
+        cos_matrix_1 = cos_matrix_1.loc[common_list, common_list]
+
+    elif Common == True:
+        # Filtered by the comparison set:
+
+        cos_matrix_1 = cos_matrix_1.loc[common_list, common_list]
+
+    else:
+        # Without filtering:
+
+        cos_matrix_1 = cos_matrix_1.loc[similarity.index, similarity.index]
+
+    # Get the top similar and dissimilar GO terms based on the corresponding distance measure:
+
+    disimilar_values = (
+        cos_matrix_1.mask(np.triu(np.ones(cos_matrix_1.shape)).astype(bool))
+        .stack()
+        .sort_values(ascending=True)
+    )
+
+    top_100_similar_values = disimilar_values[0:number_similar]
+    top_100_dissimilar_values = disimilar_values[-number_similar:]
+
+    a = []
+    b = []
+
+    G = graph.from_resource("go-basic", snakemake.params.data_path)  # ./Data/go-basic.obo"
+    similarity.precalc_lower_bounds(G)
+
+    for i in range(len(top_100_similar_values)):
+        GO1 = top_100_similar_values.index.get_level_values(0)[i]
+        GO2 = top_100_similar_values.index.get_level_values(1)[i]
+
+        try:
+            a.append(similarity.lin(G, GO1, GO2))
+        except Exception as PGSSLookupError:
+            continue
+
+    for i in range(len(top_100_dissimilar_values)):
+        GO1 = top_100_dissimilar_values.index.get_level_values(0)[i]
+        GO2 = top_100_dissimilar_values.index.get_level_values(1)[i]
+
+        try:
+            b.append(
+                similarity.lin(G, GO1, GO2)
+            )  # Computes the Lim's semantic similarity, other similarities can be also computed changing this function.
+        except Exception as PGSSLookupError:
+            continue
+
+    # Relate the distance with the semantic similarity:
+
+    # c = [similarity.values[np.triu_indices(len(similarity), k = 1)]]
+
+    c = []
+
+    # Give back the results:
+
+    if len(b) > 0:
+        return (
+            np.mean(a),
+            np.std(a),
+            np.mean(b),
+            np.std(b),
+            np.mean(c),
+            np.std(c),
+            top_100_similar_values,
+            top_100_dissimilar_values,
         )
+    else:
+        print("error")
 
-    n_cores = multiprocessing.cpu_count()
-    pool1 = Pool(processes=n_cores)
-    pool1.starmap(Test_Functional_Organization, Process)
-    pool1.close()
-    pool1.join()
+
+def Compute_Jaccard_Top_Pairs(Cancer, Control):
+    Jacc_list = []
+
+    for pair in range(len(Control)):
+        # Get the pair:
+
+        pair_control = Control.index[pair]
+        reverse_pair_control = (Control.index[pair][1], Control.index[pair][0])
+
+        if pair_control in Cancer.index:
+            Jacc_list.append(1)
+        elif reverse_pair_control in Cancer.index:
+            Jacc_list.append(1)
+        else:
+            Jacc_list.append(0)
+
+    # Return Jaccard:
+
+    return sum(Jacc_list) / (len(Jacc_list) + len(Jacc_list) - sum(Jacc_list))
 
 
 def Test_Functional_Organization(
@@ -94,15 +160,15 @@ def Test_Functional_Organization(
     # Paths:
 
     save_cosine = f"{data_dir}/FMM/"
-    functional_path = f"{data_dir}/Data/"
-    Filter_path = f"{data_dir}/Data/"
+    functional_path = f"{data_dir}/"
+    Filter_path = f"{data_dir}/"
 
     # Calculate the Semantic Similarity:
 
     for cancer, tissue, cell in zip(
         Cancer_type_list, Normal_Tissue_list, Cell_type_list
     ):
-        print("Start Computations")
+        #print("Start Computations")
 
         # List to save the information:
 
@@ -161,15 +227,10 @@ def Test_Functional_Organization(
             else:
                 # Unique common list for both networks:
                 if annotation == "GO":
-                    common_list = list(
-                        pd.read_csv(f"{Filter_path}Common_Set_{tissue}.csv")["0"]
-                    )
+                    common_list = list(pd.read_csv(f"{Filter_path}Common_Set_{tissue}.csv")["0"])
                 else:
                     common_list = list(
-                        pd.read_csv(
-                            f"{Filter_path}Common_Set_{tissue}_{annotation}.csv"
-                        )["0"]
-                    )
+                        pd.read_csv(f"{Filter_path}Common_Set_{tissue}_{annotation}.csv")["0"])
 
                 Cancer_Result = Calculate_Semantic_Similarity(
                     dim, path_Cancer, common_list, filtered, Common, number_similar
@@ -242,21 +303,34 @@ def Test_Functional_Organization(
         f.write(sa)
         f.close()
 
-        print("Finish Computations")
-
+        #print("Finish Computations")
 
 # Examples of ways for evaluating the organization:
 # Semantic similarity of Top 500 closest/farthest functional annotation embedding vectors:
-Parallel_Functional_Organization(
-    snakemake.params.Cancer_list,
-    snakemake.params.Normal_tissue_list,
-    snakemake.params.Control_list,
-    snakemake.params.dimension_list, 
-    snakemake.params.data_path,
-    matrix="PPMI",
-    filtered=True,
-    Common=True,
-    Jaccard=True,
-    number_similar=500,
-    annotation=snakemake.params.annotation,
-)
+
+log_file = open(snakemake.log[0], "w")
+sys.stdout = log_file
+
+processes = []
+for cancer, tissue, cell in zip(snakemake.params.Cancer_list, snakemake.params.Normal_tissue_list, snakemake.params.Control_list):
+    processes.append([
+            [cancer], 
+            [tissue], 
+            [cell], 
+            snakemake.params.dimension_list, 
+            snakemake.params.data_path,
+            "PPMI",
+            snakemake.params.filtered,
+            snakemake.params.use_common,
+            True,
+            500,
+            snakemake.params.annotation])
+
+
+with Pool(len(processes)) as pool:
+    results = pool.map(solve, processes)
+    pool.close()
+    pool.join()
+
+
+log_file.close()

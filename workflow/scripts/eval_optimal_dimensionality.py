@@ -87,7 +87,7 @@ def Plot_Relative_Error(
                 comparison_list,
                 Control_Error,
                 marker="o",
-                label="Control {Tissue} {matrix}",
+                label=f"Control {tissue} {matrix}",
                 linewidth=5,
                 markersize=8,
             )
@@ -139,7 +139,7 @@ def Plot_Relative_Error(
                 comparison_list,
                 Control_Error,
                 marker="o",
-                label="Control {Tissue} {matrix}",
+                label=f"Control {tissue} {matrix}",
                 color="#f1948a",
                 linewidth=5,
                 markersize=8,
@@ -204,7 +204,7 @@ def Plot_Relative_Error(
 
     # Save the plot:
 
-    fig.savefig(f'{data_dir}/Relative_Error_{annotation}.png', format="png", dpi=600,
+    fig.savefig(f'{data_dir}/Relative_Error_{annotation}.svg', format="svg", dpi=600,
                  bbox_inches='tight')
 
 

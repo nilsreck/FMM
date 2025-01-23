@@ -20,7 +20,7 @@ def Fold_enriched(Total, Total_succes, sample, sample_succes):
         return (fold, 1 - p_value)
 
 
-def Do_Fold_Enrichment_Complete(Normal_tissue_list, data_dir):
+def Do_Fold_Enrichment_Complete(Normal_tissue_list, data_dir, annotation):
     path_rank = f"{data_dir}/"
     gene_GO_path = f"{data_dir}/"
 
@@ -36,8 +36,12 @@ def Do_Fold_Enrichment_Complete(Normal_tissue_list, data_dir):
         for tissue in Normal_tissue_list:
             # Load movement and choose the most moving:
 
-            rank = pd.read_csv(f"{path_rank}Rank_movement_{tissue}_PPMI_Leaf.csv")
+            rank = pd.read_csv(f"{path_rank}Rank_movement_{tissue}_PPMI_{annotation}.csv")
             moving_GO = rank[rank["0"] > (np.mean(rank["0"]) + 2 * np.std(rank["0"]))]["Unnamed: 0"]
+            stable_GO = rank[rank["0"] < (np.mean(rank["0"]) - 2 * np.std(rank["0"]))]["Unnamed: 0"]
+
+            print(f"shifted in {tissue}: ", len(moving_GO))
+            print(f"stable in {tissue}: ", len(stable_GO))
 
             # Load cosines:
 
@@ -140,6 +144,6 @@ def Do_Fold_Enrichment_Complete(Normal_tissue_list, data_dir):
 f = open(snakemake.log[0], "w")
 sys.stdout = f
 
-Do_Fold_Enrichment_Complete(snakemake.params.Normal_tissue_list, snakemake.params.data_path)
+Do_Fold_Enrichment_Complete(snakemake.params.Normal_tissue_list, snakemake.params.data_path, snakemake.params.annotation)
 
 f.close()

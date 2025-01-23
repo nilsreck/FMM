@@ -109,7 +109,7 @@ def Relative_Error(
                 else:
                     bp = json.load(open(f"{data_dir}/gene2go_Human_PPIGO_Specific_BP.json"))
 
-                number_GO = 3
+                number_GO = snakemake.params.annotation_minimum
                 annotation_list = [name for sublist in bp.values() for name in sublist]
                 occurance_of_each_annotation_in_network = Counter(annotation_list)
                 terms_filtering = [
@@ -247,8 +247,8 @@ Parallel_Error(
     snakemake.params.data_path,
     common_list=None,
     matrix="PPMI",
-    filtered=True,
-    Common=False,
+    filtered=snakemake.params.filtered,
+    Common=snakemake.params.use_common,
     annotation=snakemake.params.annotation,
 )
 

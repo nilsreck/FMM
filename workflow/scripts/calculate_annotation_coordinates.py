@@ -252,7 +252,7 @@ def GO_Embeddings_Human(
     save=True,
 ):
     """
-    Imputs:
+    Inputs:
 
         Matrix_Gene_GO : DataFrame with genes and GO terms (0 : Not annotated, 1 : Annotated)
         gene_embeddings: Array with the embeddings of the genes.
@@ -388,7 +388,7 @@ def Annotate_Gene_Space(
         )
         Control_genes_list = list(Control_genes["0"])
 
-        # Subset the annotation to keep ontly the genes:
+        # Subset the annotation to keep only the genes:
 
         GO_Gene_Matrix_Cancer = GO_Matrix[GO_Matrix.index.isin(Cancer_genes_list)]
         GO_Gene_Matrix_Control = GO_Matrix[GO_Matrix.index.isin(Control_genes_list)]

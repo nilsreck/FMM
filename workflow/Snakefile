@@ -11,15 +11,32 @@ include: "rules/steps.smk"
 
 if "configurations" in config:
 
-    rule eval:
+    rule gather_results:
         input:
+            venn_diagram=data_path+"/Venn_Diagrams_Networks.svg",
+            network_statistics=data_path+"/Network_Statistics.txt",
             error_plot=get_error_plot(annotation, data_path),
             enrichments=data_path+"/cancer_enrichments_2std.svg",
-            movement_tables=get_movement_table(Normal_tissue_list, data_path),
+            #movement_tables=get_movement_table(Normal_tissue_list, data_path),
             organization=data_path+"/Organization_Common_Space.txt",
             fold_rank=data_path+"/Fold_Rank_Table_Dos.txt",
             predictions=get_predictions(Normal_tissue_list, data_path),
+            statistics=data_path+"/movement_evaluation.txt",
+            organization_plot=f"{data_path}/Functional_Organization_{annotation}_Common_Set.svg",
         resources:
             mem_mb="1gb",
             nodes=1,
             runtime=1000,
+        shell:
+            "cp -rf "
+            "{input.venn_diagram} "
+            "{input.network_statistics} "
+            "{input.error_plot} "
+            "{input.enrichments} " 
+            #"{input.movement_tables} "
+            "{input.organization} "
+            "{input.fold_rank} "
+            "{input.predictions} "
+            "{input.statistics} "
+            "{input.organization_plot} "
+            "{result_path}/"

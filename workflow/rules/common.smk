@@ -2,6 +2,7 @@
 import os
 import subprocess
 
+
 def get_genes(Control_list, Normal_tissue_list, Cancer_list, data_path):
     inputs = []
     for control, tissue, cancer in zip(Control_list, Normal_tissue_list, Cancer_list):
@@ -9,18 +10,22 @@ def get_genes(Control_list, Normal_tissue_list, Cancer_list, data_path):
         inputs.append(data_path+"/Control_"+tissue+"_"+control+"_Genes.csv")
     return inputs
 
+
 def get_Normal_tissue_string(Normal_tissue_list):
     return ' '.join(Normal_tissue_list)
 
-def get_enrichment_script():
-    return str(os.path.abspath("scripts/cancer_enrichment.py"))
 
-def get_enrichment_log():
-    return os.path.abspath("logs/cancer_enrichment.log")
+def get_literature_script():
+    return str(os.path.abspath("scripts/literature_search.py"))
 
-def get_enrichment_cmd(network_wrapper, data_path, annotation, NCBI_account, Normal_tissue_list):
-    script = get_enrichment_script()
-    log = get_enrichment_log()
+
+def get_literature_log():
+    return os.path.abspath("logs/literature_search.log")
+
+
+def get_literature_cmd(network_wrapper, data_path, annotation, NCBI_account, Normal_tissue_list):
+    script = get_literature_script()
+    log = get_literature_log()
     tissues = get_Normal_tissue_string(Normal_tissue_list)
 
     script = f"python {script} {data_path} {annotation} {NCBI_account} {log} {tissues}"
@@ -31,6 +36,7 @@ def get_enrichment_cmd(network_wrapper, data_path, annotation, NCBI_account, Nor
     cmd = cmd.replace("{log}", log)
     cmd = cmd.replace("{workdir}", work_dir)
     return cmd
+
 
 def get_networks(Control_list, Normal_tissue_list, Cancer_list, data_path):
     networks = []
@@ -69,25 +75,25 @@ def get_comparisons(dimension_list, resource_path):
     return comparisons
 
 
-def get_embeddings(Control_list, Normal_tissue_list, Cancer_list, dimension_list, data_path):
-    embeddings = []
+def get_gene_coordinates(Control_list, Normal_tissue_list, Cancer_list, dimension_list, data_path):
+    coordinates = []
     for dim in dimension_list:
         for control, tissue, cancer in zip(Control_list, Normal_tissue_list, Cancer_list):
-            embeddings.append(data_path+"/Embeddings/_P_Matrix_"+str(dim)+"_PPI_"+cancer+"_Adj_Cancer.npy")
-            embeddings.append(data_path+"/Embeddings/_P_Matrix_"+str(dim)+"_PPI_"+cancer+"_PPMI_Cancer.npy")
-            embeddings.append(data_path+"/Embeddings/_P_Matrix_"+str(dim)+"_PPI_"+tissue+"_"+control+"_Adj_Control.npy")
-            embeddings.append(data_path+"/Embeddings/_P_Matrix_"+str(dim)+"_PPI_"+tissue+"_"+control+"_PPMI_Control.npy")
+            coordinates.append(data_path+"/Embeddings/_P_Matrix_"+str(dim)+"_PPI_"+cancer+"_Adj_Cancer.npy")
+            coordinates.append(data_path+"/Embeddings/_P_Matrix_"+str(dim)+"_PPI_"+cancer+"_PPMI_Cancer.npy")
+            coordinates.append(data_path+"/Embeddings/_P_Matrix_"+str(dim)+"_PPI_"+tissue+"_"+control+"_Adj_Control.npy")
+            coordinates.append(data_path+"/Embeddings/_P_Matrix_"+str(dim)+"_PPI_"+tissue+"_"+control+"_PPMI_Control.npy")
             
-            embeddings.append(data_path+"/Embeddings/_U_Matrix_"+str(dim)+"_PPI_"+cancer+"_Adj_Cancer.npy")
-            embeddings.append(data_path+"/Embeddings/_U_Matrix_"+str(dim)+"_PPI_"+cancer+"_PPMI_Cancer.npy")
-            embeddings.append(data_path+"/Embeddings/_U_Matrix_"+str(dim)+"_PPI_"+tissue+"_"+control+"_Adj_Control.npy")
-            embeddings.append(data_path+"/Embeddings/_U_Matrix_"+str(dim)+"_PPI_"+tissue+"_"+control+"_PPMI_Control.npy")
+            coordinates.append(data_path+"/Embeddings/_U_Matrix_"+str(dim)+"_PPI_"+cancer+"_Adj_Cancer.npy")
+            coordinates.append(data_path+"/Embeddings/_U_Matrix_"+str(dim)+"_PPI_"+cancer+"_PPMI_Cancer.npy")
+            coordinates.append(data_path+"/Embeddings/_U_Matrix_"+str(dim)+"_PPI_"+tissue+"_"+control+"_Adj_Control.npy")
+            coordinates.append(data_path+"/Embeddings/_U_Matrix_"+str(dim)+"_PPI_"+tissue+"_"+control+"_PPMI_Control.npy")
             
-            embeddings.append(data_path+"/Embeddings/_G_Matrix_"+str(dim)+"_PPI_"+cancer+"_Adj_Cancer.npy")
-            embeddings.append(data_path+"/Embeddings/_G_Matrix_"+str(dim)+"_PPI_"+cancer+"_PPMI_Cancer.npy")
-            embeddings.append(data_path+"/Embeddings/_G_Matrix_"+str(dim)+"_PPI_"+tissue+"_"+control+"_Adj_Control.npy")
-            embeddings.append(data_path+"/Embeddings/_G_Matrix_"+str(dim)+"_PPI_"+tissue+"_"+control+"_PPMI_Control.npy")
-    return embeddings
+            coordinates.append(data_path+"/Embeddings/_G_Matrix_"+str(dim)+"_PPI_"+cancer+"_Adj_Cancer.npy")
+            coordinates.append(data_path+"/Embeddings/_G_Matrix_"+str(dim)+"_PPI_"+cancer+"_PPMI_Cancer.npy")
+            coordinates.append(data_path+"/Embeddings/_G_Matrix_"+str(dim)+"_PPI_"+tissue+"_"+control+"_Adj_Control.npy")
+            coordinates.append(data_path+"/Embeddings/_G_Matrix_"+str(dim)+"_PPI_"+tissue+"_"+control+"_PPMI_Control.npy")
+    return coordinates
 
 
 def get_annotations(annotation, data_path):
@@ -97,15 +103,15 @@ def get_annotations(annotation, data_path):
         return data_path+"/_Matrix_Genes_GO_BP_PPI.csv"
 
 
-def get_mapped_embeddings(Control_list, Normal_tissue_list, Cancer_list, dimension_list, annotation, data_path):
-    embeddings = []
+def get_annotation_coordinates(Control_list, Normal_tissue_list, Cancer_list, dimension_list, annotation, data_path):
+    coordinates = []
     for dim in dimension_list:
         for control, tissue, cancer in zip(Control_list, Normal_tissue_list, Cancer_list):
-            embeddings.append(data_path+"/Embeddings/_GO_Embeddings_"+annotation+"_PPI_"+cancer+"_"+str(dim)+"_Adj_Cancer.csv")
-            embeddings.append(data_path+"/Embeddings/_GO_Embeddings_"+annotation+"_PPI_"+cancer+"_"+str(dim)+"_PPMI_Cancer.csv")
-            embeddings.append(data_path+"/Embeddings/_GO_Embeddings_"+annotation+"_PPI_"+tissue+"_"+control+"_"+str(dim)+"_Adj_Control.csv")
-            embeddings.append(data_path+"/Embeddings/_GO_Embeddings_"+annotation+"_PPI_"+tissue+"_"+control+"_"+str(dim)+"_PPMI_Control.csv")
-    return embeddings
+            coordinates.append(data_path+"/Embeddings/_GO_Embeddings_"+annotation+"_PPI_"+cancer+"_"+str(dim)+"_Adj_Cancer.csv")
+            coordinates.append(data_path+"/Embeddings/_GO_Embeddings_"+annotation+"_PPI_"+cancer+"_"+str(dim)+"_PPMI_Cancer.csv")
+            coordinates.append(data_path+"/Embeddings/_GO_Embeddings_"+annotation+"_PPI_"+tissue+"_"+control+"_"+str(dim)+"_Adj_Control.csv")
+            coordinates.append(data_path+"/Embeddings/_GO_Embeddings_"+annotation+"_PPI_"+tissue+"_"+control+"_"+str(dim)+"_PPMI_Control.csv")
+    return coordinates
 
 
 def get_FMMs(Control_list, Normal_tissue_list, Cancer_list, dimension_list, annotation, data_path):
@@ -152,26 +158,12 @@ def get_movements(Normal_tissue_list, annotation, data_path):
     return movements
 
 
-def get_top_movements(Normal_tissue_list, data_path):
-    movements = []
-    for tissue in Normal_tissue_list: 
-        movements.append(data_path+"/top_100_moving_"+tissue+".csv")
-    return movements
-    
-
-def get_transformed(Normal_tissue_list, data_path):
-    transformed = []
-    for tissue in Normal_tissue_list: 
-        transformed.append(data_path+"/Transformed_Common_"+tissue+".csv")
-    return transformed
-
-
 def get_movement_table(Normal_tissue_list, data_path):
     tables = []
     for tissue in Normal_tissue_list: 
         tables.append(data_path+"/Top_moving_"+tissue+"_Table.csv")
     return tables
-
+    
 
 def get_counts(Normal_tissue_list, data_path):
     counts = []
@@ -189,7 +181,7 @@ def get_distances(Normal_tissue_list, data_path):
 
 
 def get_error_plot(annotation, data_path):
-    return data_path+"/Relative_Error_"+annotation+".png"
+    return data_path+"/Relative_Error_"+annotation+".svg"
 
 
 def get_predictions(Normal_tissue_list, data_path):

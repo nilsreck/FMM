@@ -235,23 +235,11 @@ def Generate_Gene_Embeddings(
     for cancer, tissue, cell in zip(
         Cancer_type_list, Normal_Tissue_list, Cell_type_list
     ):
+    
         # Solver = SNMTF(max_iter, verbose)
 
         # Load the information:
 
-        # Cancer_adj = np.load(
-        #     f"{network_path}Cancer_{cancer}_PPI.npy", allow_pickle=True
-        # )
-        # Control_adj = np.load(
-        #     f"{network_path}Control_{tissue}_{cell}_PPI.npy", allow_pickle=True
-        # )
-
-        # Cancer_PPMI = np.load(
-        #     f"{network_path}Cancer_PPMI_{cancer}.npy", allow_pickle=True
-        # )
-        # Control_PPMI = np.load(
-        #     f"{network_path}Control_PPMI_{tissue}_{cell}.npy", allow_pickle=True
-        # )
 
         Cancer_adj = f"{network_path}Cancer_{cancer}_PPI.npy"
         Control_adj = f"{network_path}Control_{tissue}_{cell}_PPI.npy"
@@ -281,40 +269,6 @@ def Generate_Gene_Embeddings(
                 save_path,
                 f"PPI_{tissue}_{cell}",
                 "Control"))
-
-        # Cancer_PPMI_process = (max_iter, verbose,
-        #         Cancer_PPMI,
-        #         dimension_list[0],
-        #         save_path,
-        #         f"PPI_{cancer}",
-        #         "PPMI_Cancer",
-        #         "SVD")
-        # Cancer_adj_process = (max_iter, verbose,
-        #         Cancer_adj,
-        #         dimension_list[0],
-        #         save_path,
-        #         f"PPI_{cancer}",
-        #         "Adj_Cancer",
-        #         "SVD")
-        # Control_PPMI_process = (max_iter, verbose,
-        #         Control_PPMI,
-        #         dimension_list[0],
-        #         save_path,
-        #         f"PPI_{tissue}_{cell}",
-        #         "PPMI_Control",
-        #         "SVD")
-        # Control_adj_process = (max_iter, verbose,
-        #         Control_adj, 
-        #         dimension_list[0],
-        #         save_path,
-        #         f"PPI_{tissue}_{cell}",
-        #         "Adj_Control",
-        #         "SVD")
-
-        # with Pool(4) as pool:
-            # pool.map(solve, [Cancer_PPMI_process, Cancer_adj_process, Control_PPMI_process, Control_adj_process])          
-            # pool.close()
-            # pool.join()
 
         # for dim in dimension_list:
         #     Solver.Solve_MUR(

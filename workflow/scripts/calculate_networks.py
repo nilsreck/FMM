@@ -196,8 +196,8 @@ def Venn_Diagram_Cancer_Networks(Cancer_type_list, Normal_Tissue_list, Cell_type
     # Save the plot:
 
     fig.savefig(
-        f"{network_path}Venn_Diagrams_Networks.png",
-        format="png",
+        f"{network_path}Venn_Diagrams_Networks.svg",
+        format="svg",
         dpi=600,
         bbox_inches="tight",
     )
