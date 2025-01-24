@@ -11,13 +11,14 @@ For reasons of reproducibility, we have saved the data from the original paper i
 Please donwload these files first and move them to the `Data` folder.
 
 ## Parameters
-The pipeline takes a few parameters, most of which are already set to replicate the results Doria Belenguer et al. . These Parameters can be found in a configuration file at workflow/config.yaml .
-Note that the necessary parameter "NCBI_account" is empty. To successfully execute the script, This has to be filled with an email linked to an NCBI account. \\
-Additional Snakemake parameters can be set depending on the system. You can set these parameters in "workflow/profiles/default/config.yaml" (see [Snakemake Profiles](https://snakemake.readthedocs.io/en/stable/executing/cli.html)). 
+The pipeline takes a few parameters, most of which are set to replicate the results Doria Belenguer et al. . These Parameters can be found in a configuration file at "workflow/config.yaml" . Because this pipeline was created in the scope of a reproducibility study, some parameters will not function, as the original code was erroneous and we only fixed those parameter choices that copy the results by the original authors.
+Note that the necessary parameter "NCBI_account" is empty. To successfully execute the script, this has to be filled with an email linked to an NCBI account. \\
 
 ## Dependencies
-This pipeline requires three different environments. Yaml files can be found in the "envs" folder. However, only the "snakemake.yaml" needs to be created manually to execute this pipeline. The other two will be created automatically during runtime upon the first execution.
+This pipeline requires four different environments. Yaml files can be found in the "envs" folder. However, only the "snakemake.yaml" needs to be created manually to execute this pipeline. The other two will be created automatically during runtime upon the first execution.
 
 ## Computational Requirements
-Each step of the workflow has different computational requirements and can be found in workflow/rules/steps.smk. The range of required resources reaches from 1 to 6 parallel processes with up to 4 GB of memory for each of these 6 threads. Additionally, the results will take up about 8 additional GB of disc space, and one process requires access to the NCBI website using this URL "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi". 
+This pipeline was designed for cluster execution. To configure cluster specific job allocation methods, open the config file found at "workflow/profiles/default/config.yaml". See the [snakemake cluster execution](https://snakemake.readthedocs.io/en/v7.19.1/executing/cluster.html) and [snakemake profiles](https://snakemake.readthedocs.io/en/stable/executing/cli.html#) for further details on how to set this up. Each step of the workflow has different computational requirements that can be found in workflow/rules/steps.smk. The range of required resources reaches from 1 to 8 parallel processes with up to 4 GB of memory for each of these 8 threads. Some single node processes require up to 32 Gb of memory. Additionally, the results will take up about 8 additional GB of disc space, and one process requires access to the NCBI website using this URL "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi". 
 
+## Execution
+To exucute the pipeline, use conda activate snakemake (the environment found in snakemake.yaml) and enter the workflow directory. The pipeline can then simply be activated by typing "snakemake" to the command line.
