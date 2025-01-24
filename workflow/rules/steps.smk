@@ -212,6 +212,7 @@ rule calculate_optimal_dimensionality:
         data_path=data_path,
         annotation_minimum=annotation_minimum,
         use_common=use_common_for_dimensionality,
+        filtered=filtered,
     resources:
         mem_mb="32gb",
         nodes=4,
@@ -373,7 +374,7 @@ rule calculate_semantic_similarity:
         use_common=use_common_for_similarity,
         filtered=filtered,
     resources:
-        mem_mb="64gb",
+        mem_mb="32gb",
         nodes=len(Cancer_list),
         runtime=1000,
     log:
@@ -398,7 +399,7 @@ rule eval_functional_organization_2:
         data_path=data_path,
         annotation=annotation,
     resources:
-        mem_mb="4gb",
+        mem_mb="32gb",
         nodes=len(Cancer_list),
         runtime=1000,
     log:
