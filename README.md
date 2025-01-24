@@ -26,30 +26,30 @@ To exucute the pipeline, use conda activate snakemake (the environment found in 
 ## Results
 The results will be copied into the "Results/" directory. 
 Those consist of the prediction table and results from different statistical analyses:
-+ The prediction tables $\text{(Predictions_Rank_{tissue}.csv)}$ are sorted by predictive confidence and entail the amount of literature validated occurences of the corresponding gene. These are produced by rule "eval_predictions".
-+ $\text{Fold_Rank_Table_Dos.txt}$ contains the results of a statistical test using the hypergeometric distribution where the H0-hypothesis is "those genes, that change their distance to moving/stable annotations the most/least, are not enriched/depleted in literature validated cancer-genes". The resulting table contains the number of such genes and the p-value in brackets. This is produced by rule "eval_predictions". 
-+ $\text{Network_Statistics.txt}$ contains details for each gene network. This is produced by rule "calculate_networks".
-+ $\text{Venn_Diagrams_Networks.svg}$ shows the amount of overlap between the different gene networks for each tissue. This is produced by rule "calculate_networks".
-+ $\text{Relative_Error_Leaf.svg}$ shows the effects of increasing dimensionality for the embedding spaces on the FMM Matrices. The original authors use this to deduce the optimal dimensionality where the relative error stops declining. This is produced by rule "eval_optimal_dimensionality".
-+ $\text{cancer_enrichments\_2std.svg}$ shows cancer-relatedness of annotations grouped by their movement between the embedding spaces for cancer and control tissues. This shows that this movement is indeed correlated to annotations adopting cancer functions. This is produced by rule "eval_movements".
-+ $\text{movement_evaluation.txt}$ shows the results of two statistical evaluations of movement. The first is a Mann–Whitney U test using movement of known cancer-related annotations (calculated by the original authors) and annotations that are not. The file used for these is "enriched_in_cancer_gobp_terms_cosmic.txt". The second Test is using a Hypergeometric distribution to do the same evaluation; H0-hypothesis being "High annotation movement is un-correlated to cancer-relatedness". This file is produced by rule "eval_movemants".
-+ $\text{Functional_Organization_Leaf_Common_Set.svg}$ shows semantic similarity between annotations closely together (Similar) and annotations far apart (Dissimilar) within the embedding spaces. This portrays that biological functionality is captured by distances in this embedding space. This is produced by rule "eval_functional_organization_1".
-+ $\text{Organization_Common_Space.txt}$ contains a table with the results of another Mann–Whitney U test. The two groups here are distances for each gene to belonging annotations and non-belonging annotations. This is produced by rule "eval_functional_organization".
++ The prediction tables $$\text{(Predictions_Rank_{tissue}.csv)}$$ are sorted by predictive confidence and entail the amount of literature validated occurences of the corresponding gene. These are produced by rule "eval_predictions".
++ $$\text{Fold_Rank_Table_Dos.txt}$$ contains the results of a statistical test using the hypergeometric distribution where the H0-hypothesis is "those genes, that change their distance to moving/stable annotations the most/least, are not enriched/depleted in literature validated cancer-genes". The resulting table contains the number of such genes and the p-value in brackets. This is produced by rule "eval_predictions". 
++ $$\text{Network_Statistics.txt}$$ contains details for each gene network. This is produced by rule "calculate_networks".
++ $$\text{Venn_Diagrams_Networks.svg}$$ shows the amount of overlap between the different gene networks for each tissue. This is produced by rule "calculate_networks".
++ $$\text{Relative_Error_Leaf.svg}$$ shows the effects of increasing dimensionality for the embedding spaces on the FMM Matrices. The original authors use this to deduce the optimal dimensionality where the relative error stops declining. This is produced by rule "eval_optimal_dimensionality".
++ $$\text{cancer_enrichments\_2std.svg}$$ shows cancer-relatedness of annotations grouped by their movement between the embedding spaces for cancer and control tissues. This shows that this movement is indeed correlated to annotations adopting cancer functions. This is produced by rule "eval_movements".
++ $$\text{movement_evaluation.txt}$$ shows the results of two statistical evaluations of movement. The first is a Mann–Whitney U test using movement of known cancer-related annotations (calculated by the original authors) and annotations that are not. The file used for these is "enriched_in_cancer_gobp_terms_cosmic.txt". The second Test is using a Hypergeometric distribution to do the same evaluation; H0-hypothesis being "High annotation movement is un-correlated to cancer-relatedness". This file is produced by rule "eval_movemants".
++ $$\text{Functional_Organization_Leaf_Common_Set.svg}$$ shows semantic similarity between annotations closely together (Similar) and annotations far apart (Dissimilar) within the embedding spaces. This portrays that biological functionality is captured by distances in this embedding space. This is produced by rule "eval_functional_organization_1".
++ $$\text{Organization_Common_Space.txt}$$ contains a table with the results of another Mann–Whitney U test. The two groups here are distances for each gene to belonging annotations and non-belonging annotations. This is produced by rule "eval_functional_organization".
 
 
 ## Brief Rule Descriptions
 
-$ \text{prepare\_resources} $ \
+$$ \text{prepare\_resources} $$ \
 \## _creates auxiliary files_
 
-$ \text{calculate\_common\_gene} $ \
+$$ \text{calculate\_common\_gene} $$ \
 \## _filters genes that are common in all input files_ \
 \# load annotations -------------------------------------------------	"\_Matrix\_Genes\_GO\_BP\_PPI.csv" \
 \# load genes -------------------------------------------------------- "{Group}\_{tissue}\_Genes.csv" \
 \# intersect the two files for cancer and control \
 \# -> common genes ------------------------------------------------ "Common\_Set\_{tissue}\_Leaf.csv"
 
-$ \text{calculate\_networks} $ \
+$$ \text{calculate\_networks} $$ \
 \## _generate the networks and their statistics_ \
 \# load genes -------------------------------------------------------- "{group}\_{tissue}\_Genes.csv" \
 \# load PPI ----------------------------------------------------------- "Human\_Biogrid\_Genes\_PPI\_" \
@@ -58,13 +58,13 @@ $ \text{calculate\_networks} $ \
 \# -> Venn-Diagram ------------------------------------------------- "Venn\_Diagrams\_Networks.svg" \
 \# -> Network-Statistics --------------------------------------------- "Network\_Statistics.txt"
 
-$ \text{calculate\_PPMI} $ \
+$$ \text{calculate\_PPMI} $$ \
 \## _generate the ppmi matrix_ \
 \# load network ------------------------------------------------------ "{group}\_{tissue}\_PPI.npy" \
 \# perform a deep-walk \
 \# -> PPMI ----------------------------------------------------------- "{group}\_PPMI\_{tissue}.npy"
 
-$ \text{calculate\_embeddings} $ \
+$$ \text{calculate\_embeddings} $$ \
 \## _generate the embedding coordinates for the genes_ \
 \# load network ------------------------------------------------------ "{group}\_{tissue}\_PPI.npy" \
 \# load PPMI --------------------------------------------------------- "{group}\_PPMI\_{tissue}.npy" \
@@ -73,7 +73,7 @@ $ \text{calculate\_embeddings} $ \
 \# -> gene coordinates (P) ------------------------------------------- "Embeddings/\_P\_Matrix\_{dim}\_PPI\_{tissue}\_{matrix}\_{group}.npy" \
 \# -> gene coordinates (S) ------------------------------------------- "Embeddings/\_U\_Matrix\_{dim}\_PPI\_{tissue}\_{matrix}\_{group}.npy"
 
-$ \text{calculate\_annotation\_coordinates} $ \
+$$ \text{calculate\_annotation\_coordinates} $$ \
 \## _calculate the embedding coordinates for the annotations (U-matrix)_ \
 \# load annotations -------------------------------------------------- "\_Matrix\_Genes\_GO\_BP\_PPI.csv" \
 \# load genes --------------------------------------------------------- "{group}\_{tissue}\_Genes.csv" \
@@ -81,13 +81,13 @@ $ \text{calculate\_annotation\_coordinates} $ \
 \# load embedding space (G) ---------------------------------------- "\_G\_Matrix\_{dim}\_PPI\_{tissue}\_PPMI\_{group}.npy" \
 \# -> annotation coordinates (U) ------------------------------------ "\_GO\_Embeddings\_Leaf\_PPI\_{tissue}\_{dim}\_{matrix}\_{group}.csv"
 
-$ \text{calculate\_FMMs} $ \
+$$ \text{calculate\_FMMs} $$ \
 \## _generate the FMMs_ \
 \# load annotation coordinates (U) ---------------------------------- "\_GO\_Embeddings\_Leaf\_PPI\_{tissue}\_{dim}\_{matrix}\_{group}.csv" \
 \# calculate cosine annotation distances \
 \# -> cosine annotation distances (FMM) ---------------------------- "Cosine\_{group}\_{tissue}\_{dim}\_PPMI\_Leaf.csv" 
 
-$ \text{calculate\_movements} $ \
+$$ \text{calculate\_movements} $$ \
 \## _enrichment analysis (with self made cancer relatedness)_ \
 \# load cosine annotation distances (FMM) --------------------------"Cosine\_{group}\_{tissue}\_{dim}\_PPMI\_Leaf.csv" \
 \# load common set -------------------------------------------------- "Common\_Set\_{tissue}\_Leaf.csv" \
@@ -95,7 +95,7 @@ $ \text{calculate\_movements} $ \
 \# calculate movement between cancer and control \
 \# -> annotation movement ------------------------------------------ "Rank\_movement\_{tissue}\_PPMI\_Leaf.csv"
 
-$ \text{literature\_search} $ \
+$$ \text{literature\_search} $$ \
 \## _Literature validation_ \
 \# load top moving --------------------------------------------------- "top\_100\_moving\_{tissue}.csv" \
 \# query top moving to ncbi  \
@@ -104,7 +104,7 @@ $ \text{literature\_search} $ \
 \# query gene descriptions to ncbi \
 \# -> gene literature -------------------------------------------------- "Cancer\_Count\_{tissue}.csv"
 
-$ \text{calculate\_annotation\_gene\_distances} $ \
+$$ \text{calculate\_annotation\_gene\_distances} $$ \
 \## _calculate the distance between genes and annotations withn the embedding space_ \
 \# load gene coordinates (P) ------------------------------------------ "Embeddings/\_P\_Matrix\_{dim}\_PPI\_{tissue}\_{matrix}\_{group}.npy" \
 \# load gene coordinates (S) ------------------------------------------ "Embeddings/\_U\_Matrix\_{dim}\_PPI\_{tissue}\_{matrix}\_{group}.npy" \
@@ -115,14 +115,14 @@ $ \text{calculate\_annotation\_gene\_distances} $ \
 \# calculate distances between top 100 annotation coordinates and gene coordinates \
 \# -> annotation gene distances -------------------------------------- "{group}\_Gene\_GO\_dist\_{tissue}.csv"
 
-$ \text{eval\_functional\_organization\_2} $ \
+$$ \text{eval\_functional\_organization\_2} $$ \
 \## _test whether embedding spaces capture annotation beloningness for genes_ \
 \# load annotation gene distances ------------------------------------ "{group}\_Gene\_GO\_dist\_{tissue}.csv" \
 \# split in distances to belonging annotations and non belonging annotations \
 \# mannwhitneyu test: H0 = distance to belonging annotations does not differ for non-belonging annotations \
 \# -> organization evaluation ------------------------------------------ "Organization\_Common\_Space.txt"
 
-$ \text{calculate\_optimal\_dimensionality} $ \
+$$ \text{calculate\_optimal\_dimensionality} $$ \
 \## _Calculate relative error between spaces and deduce the optimal dimensionality_ \
 \# load cosine annotation distances (FMM) --------------------------- "FMM/Cosine\_{group}\_{tissue}\_{dim}\_PPMI\_Leaf.csv" \
 \# load annotations ----------------------------------------------------- "gene2go\_Human\_PPIGO\_Specific\_BP.json" \
@@ -130,12 +130,12 @@ $ \text{calculate\_optimal\_dimensionality} $ \
 \# calculate relative error between embedding spaces of different dimensionalities \
 \# -> relative error ------------------------------------------------------ "FMM/Relative\_{group}\_{tissue}\_PPMI\_Leaf.txt"
 
-$ \text{eval\_optimal\_dimensionality} $ \
+$$ \text{eval\_optimal\_dimensionality} $$ \
 \## _plot the relative error between embedding spaces of increasing dimensionality_ \
 \# load relative error --------------------------------------------------- "FMM/Relative\_{Group}\_{tissue}\_PPMI\_Leaf.txt" \
 \# -> Error between dimensionalities ---------------------------------- "FMM/Relative\_Error\_Leaf.svg"
 
-$ \text{eval\_movements} $ \
+$$ \text{eval\_movements} $$ \
 \## _statistical tests to evaluate the corrlatio between annotation movement and cancer using author defined cancer hallmarks_ \
 \# load cancer annotations (by the authors) -------------------------- "enriched\_in\_cancer\_gobp\_terms\_cosmic.txt" \
 \# load annotation movement ----------------------------------------- "Rank\_movement\_{tissue}\_PPMI\_Leaf.csv" \
@@ -145,7 +145,7 @@ $ \text{eval\_movements} $ \
 \# plot movement evaluation \
 \# -> movement evaluation plot -------------------------------------- "cancer\_enrichments\_2std.svg"
 
-$ \text{calculate\_semantic\_similarity} $ \
+$$ \text{calculate\_semantic\_similarity} $$ \
 \## _Assess the functional organization of genes and functions in the embedding space_ \
 \# load cosine annotation distances (FMM) -------------------------- "FMM/Cosine\_{Group}\_{tissue}\_{dim}\_PPMI_Leaf.csv" \
 \# load common genes ----------------------------------------------- "Common\_Set\_{tissue}\_Leaf.csv" \
@@ -156,12 +156,12 @@ $ \text{calculate\_semantic\_similarity} $ \
 \# calculate Jaccard distance between cancer and control \
 \# -> similarities -------------------------------------------------------- "Similarity\_{tissue}\_Common\_Set\_500.json"
 
-$ \text{eval\_functional\_organization\_1} $ \
+$$ \text{eval\_functional\_organization\_1} $$ \
 \## _plot how well the embedding space captures semantic similarity between annotations via distance_ \
 \# load similarities ------------------------------------------------------ "Similarity\_{tissue}\_Common\_Set\_500.json" \
 \# -> similarity plot ----------------------------------------------------- "Functional\_Organization\_Leaf\_Common\_Set.svg"
 
-$ \text{eval\_predictions} $ \
+$$ \text{eval\_predictions} $$ \
 \## _Do the gene predictions and validate them with an enrichment analyses_ \
 \# load annotation movement -------------------------------------------- "Rank\_movement\_{tissue}\_PPMI\_Leaf.csv" \
 \# subset the most moving annotations (2*std) \
@@ -177,7 +177,7 @@ $ \text{eval\_predictions} $ \
 \# hypergeom test: H0 = bottom 5% are not depleted in literature validated genes \
 \# -> prediction evaluation ----------------------------------------------- "Fold\_Rank\_Table\_Dos.txt"
 
-$ \text{gather\_results} $ \
+$$ \text{gather\_results} $$ \
 \## _copy results into result folder_
 
 
