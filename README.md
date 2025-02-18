@@ -1,35 +1,60 @@
 # Reproducibility Study of "A functional analysis of omic network embedding spaces reveals key altered functions in cancer" by Doria-Belenguer et al.
 
-**Authors:** Nils Reck, Henning Mitzinger, Arne Kugel
+**Authors:** Nils Reck, Henning Mitzinger, Arne Kugel <br>
 **Affiliation:** Chair of Algorithmic Bioinformatics, Heinrich Heine University Düsseldorf
 
 ## Summary of the Reproducibility Study
-This repository contains a reproducibility study of "A functional analysis of omic network embedding spaces reveals key altered functions in cancer" by Doria-Belenguer et al., published in Bioinformatics 39.5 (2023).
-The original paper introduces a Functional Mapping Matrix (FMM) to embed protein-protein interaction (PPI) networks while incorporating functional annotations. However, significant challenges were encountered during reproduction.
-paper can be found [here](https://academic.oup.com/bioinformatics/article/39/5/btad281/7135836?login=false). Snakemake is a workflow tool developed by [Felix Mölder et al.](https://f1000research.com/articles/10-33/v1). 
+This repository contains a reproducibility study of [*"A functional analysis of omic network embedding spaces reveals key altered functions in cancer"*](https://academic.oup.com/bioinformatics/article/39/5/btad281/7135836?login=false) by Doria-Belenguer et al., published in Bioinformatics 39.5 (2023).
+The original paper introduces a Functional Mapping Matrix (FMM) to embed protein-protein interaction (PPI) networks while incorporating functional annotations. 
+However, significant challenges were encountered during reproduction.
 
-## Data Availability 
-The following files: `Human_Biogrid_Adj_PPI_.npy`, `_Matrix_Genes_GO_BP_PPI.csv`, `enriched_in_cancer_gobp_terms_cosmic.txt`, 
-corresponding to the human PPI network, the GO BP annotations, and the semantic similarity of the GO BP terms, respectively, used in this project 
-can be downloaded [here](https://drive.google.com/drive/folders/1SlZ1QixgQu0DoCJabR_cMzjiJv6aM7Pr).
+## Key Findings
+- **Reproducibility Issues:** The provided code and datasets were insufficient for reproducing the results as described in the paper, requiring major adjustments.
+- **Codebase Limitations:** The software is highly dataset-specific, making it difficult to apply to different biological domains.
+- **Contradictions in Results:** Contrary to the original claims, the method did not significantly enrich lung cancer-related annotations.
+- **Dimensionality Selection Unclear:** While we could reproduce the relative squared errors for different embedding dimensions, the optimal dimensionality remains uncertain.
+- **Software Improvements:** To enhance usability and reproducibility, we implemented a Snakemake workflow that improves scalability, resource efficiency, and ease of use.
+
+For a detailed analysis of our methodology, challenges, and findings, read our full [ReScience report](insert link here).
+
+## Improvements in This Repo
+- Fix software issues (incompatible environments, missing data, hardcoded hyperparameters).
+- Introduce a [Snakemake](https://f1000research.com/articles/10-33/v1) workflow for modular, scalable execution of the workflow.
+- Calculate resource requirements for every step of the pipeline.
+
+## Full Reproducibility Report
+
+## How to Reproduce Our Results
+
+### Data Availability 
+The files `Human_Biogrid_Adj_PPI_.npy`, `_Matrix_Genes_GO_BP_PPI.csv` and  `enriched_in_cancer_gobp_terms_cosmic.txt` correspond to the human PPI network, the GO BP annotations, and the semantic similarity of the GO BP terms, respectively, used in this project and can be downloaded [here](https://drive.google.com/drive/folders/1SlZ1QixgQu0DoCJabR_cMzjiJv6aM7Pr).
 For reasons of reproducibility, we have saved the data from the original paper in a separate Google drive folder. 
 Please donwload these files first and move them to the `Data` folder.
 
-## Parameters
-The pipeline takes a few parameters, most of which are set to replicate the results Doria Belenguer et al. . These Parameters can be found in a configuration file at "workflow/config.yaml" . Because this pipeline was created in the scope of a reproducibility study, some parameters will not function, as the original code was erroneous and we only fixed those parameter choices that copy the results by the original authors.
-Note that the necessary parameter "NCBI_account" is empty. To successfully execute the script, this has to be filled with an email linked to an NCBI account. \\
+### Parameters
+The pipeline takes a few parameters, most of which are set to replicate the results Doria Belenguer et al. These Parameters can be found in a configuration file at `workflow/config.yaml`.
+Because this pipeline was created in the scope of a reproducibility study, some parameters will not function, as the original code was erroneous and we only fixed those parameter choices that copy the results by the original authors.
+Note that the necessary parameter `NCBI_account` is empty. To successfully execute the script, this has to be filled with an email linked to an NCBI account for the automated literature search. \\
 
-## Dependencies
-This pipeline requires four different environments. Yaml files can be found in the "envs" folder. However, only the "snakemake.yaml" needs to be created manually to execute this pipeline. The other two will be created automatically during runtime upon the first execution.
+### Dependencies
+This pipeline requires four different environments. Yaml files can be found in the `envs` folder.
+However, only the `snakemake.yaml` needs to be created manually to execute this pipeline. 
+The other two will be created automatically during runtime upon the first execution.
 
-## Computational Requirements
-This pipeline was designed for cluster execution. To configure cluster specific job allocation methods, open the config file found at "workflow/profiles/default/config.yaml". See the [snakemake cluster execution](https://snakemake.readthedocs.io/en/v7.19.1/executing/cluster.html) and [snakemake profiles](https://snakemake.readthedocs.io/en/stable/executing/cli.html#) for further details on how to set this up. Each step of the workflow has different computational requirements that can be found in workflow/rules/steps.smk. The range of required resources reaches from 1 to 8 parallel processes with up to 32 GB of memory. Additionally, the results will take up about 8 additional GB of disc space, and one process requires access to the NCBI website using this URL "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi". 
+### Computational Requirements
+This pipeline was designed for cluster execution.
+To configure cluster-specific job allocation methods, open the config file found at `workflow/profiles/default/config.yaml`.
+See the [snakemake cluster execution](https://snakemake.readthedocs.io/en/v7.19.1/executing/cluster.html) and [snakemake profiles](https://snakemake.readthedocs.io/en/stable/executing/cli.html#) for further details on how to set this up.
+Each step of the workflow has different computational requirements that can be found in `workflow/rules/steps.smk`.
+The range of required resources reaches from 1 to 8 parallel processes with up to 32 GB of memory.
+Additionally, the results will take up about 8 additional GB of disc space, and one process requires access to the NCBI website using [this URL](https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi). 
 
-## Execution
-To exucute the pipeline, use conda activate snakemake (the environment found in snakemake.yaml) and enter the workflow directory. The pipeline can then simply be activated by typing "snakemake" to the command line.
+### Execution
+To exucute the pipeline, use `conda activate snakemake` (the environment found in `snakemake.yaml`) and enter the workflow directory. 
+The pipeline can then simply be activated by typing `snakemake` to the command line.
 
-## Results
-The results will be copied into the "Results/" directory. 
+### Results
+The results will be copied into the `Results` directory. 
 Those consist of the prediction table and results from different statistical analyses:
 + The prediction tables $`\text{(Predictions\_Rank\_{tissue}.csv)}`$ are sorted by predictive confidence and entail the amount of literature validated occurences of the corresponding gene. These are produced by rule "eval_predictions".
 + $`\text{Fold\_Rank\_Table\_Dos.txt}`$ contains the results of a statistical test using the hypergeometric distribution where the H0-hypothesis is "those genes, that change their distance to moving/stable annotations the most/least, are not enriched/depleted in literature validated cancer-genes". The resulting table contains the number of such genes and the p-value in brackets. This is produced by rule "eval_predictions". 
