@@ -6,7 +6,7 @@
 ## Summary of the Reproducibility Study
 This repository contains a reproducibility study of [*"A functional analysis of omic network embedding spaces reveals key altered functions in cancer"*](https://academic.oup.com/bioinformatics/article/39/5/btad281/7135836?login=false) by Doria-Belenguer et al., published in Bioinformatics 39.5 (2023).
 The original paper introduces a Functional Mapping Matrix (FMM) to embed protein-protein interaction (PPI) networks while incorporating functional annotations. 
-However, significant challenges were encountered during reproduction.
+However, significant challenges were encountered during our reproducibility efforts.
 
 ## Key Findings
 - **Reproducibility Issues:** The provided code and datasets were insufficient for reproducing the results as described in the paper, requiring major adjustments.
