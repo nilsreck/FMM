@@ -69,146 +69,203 @@ Those consist of the prediction table and results from different statistical ana
 
 ## Brief Rule Descriptions
 
-$` \text{prepare\_resources} `$ \
-\## _creates auxiliary files_
+### `prepare_resources`
+**Creates auxiliary files**
 
-$` \text{calculate\_common\_gene} `$ \
-\## _filters genes that are common in all input files_ \
-\# load annotations -------------------------------------------------	"\_Matrix\_Genes\_GO\_BP\_PPI.csv" \
-\# load genes -------------------------------------------------------- "{Group}\_{tissue}\_Genes.csv" \
-\# intersect the two files for cancer and control \
-\# -> common genes ------------------------------------------------ "Common\_Set\_{tissue}\_Leaf.csv"
+---
 
-$` \text{calculate\_networks} `$ \
-\## _generate the networks and their statistics_ \
-\# load genes -------------------------------------------------------- "{group}\_{tissue}\_Genes.csv" \
-\# load PPI ----------------------------------------------------------- "Human\_Biogrid\_Genes\_PPI\_" \
-\# load adjacencies -------------------------------------------------- "Human\_Biogrid\_Adj\_PPI\_.npy" \
-\# -> network -------------------------------------------------------- "{group}\_{tissue}\_PPI.npy" \
-\# -> Venn-Diagram ------------------------------------------------- "Venn\_Diagrams\_Networks.svg" \
-\# -> Network-Statistics --------------------------------------------- "Network\_Statistics.txt"
+### `calculate_common_gene`
+**Filters genes that are common in all input files**
 
-$` \text{calculate\_PPMI} `$ \
-\## _generate the ppmi matrix_ \
-\# load network ------------------------------------------------------ "{group}\_{tissue}\_PPI.npy" \
-\# perform a deep-walk \
-\# -> PPMI ----------------------------------------------------------- "{group}\_PPMI\_{tissue}.npy"
+#### Steps:
+- **Load annotations** → `_Matrix_Genes_GO_BP_PPI.csv`
+- **Load genes** → `{Group}_{tissue}_Genes.csv`
+- **Intersect the two files** for cancer and control  
+  **→ Common genes** → `Common_Set_{tissue}_Leaf.csv`
 
-$` \text{calculate\_embeddings} `$ \
-\## _generate the embedding coordinates for the genes_ \
-\# load network ------------------------------------------------------ "{group}\_{tissue}\_PPI.npy" \
-\# load PPMI --------------------------------------------------------- "{group}\_PPMI\_{tissue}.npy" \
-\# do the NMTF \
-\# -> embedding space (G) ------------------------------------------ "Embeddings/\_G\_Matrix\_{dim}\_PPI\_{tissue}\_{matrix}\_{group}.npy" \
-\# -> gene coordinates (P) ------------------------------------------- "Embeddings/\_P\_Matrix\_{dim}\_PPI\_{tissue}\_{matrix}\_{group}.npy" \
-\# -> gene coordinates (S) ------------------------------------------- "Embeddings/\_U\_Matrix\_{dim}\_PPI\_{tissue}\_{matrix}\_{group}.npy"
+---
 
-$` \text{calculate\_annotation\_coordinates} `$ \
-\## _calculate the embedding coordinates for the annotations (U-matrix)_ \
-\# load annotations -------------------------------------------------- "\_Matrix\_Genes\_GO\_BP\_PPI.csv" \
-\# load genes --------------------------------------------------------- "{group}\_{tissue}\_Genes.csv" \
-\# intersect the annotations with genes and clean the data \
-\# load embedding space (G) ---------------------------------------- "\_G\_Matrix\_{dim}\_PPI\_{tissue}\_PPMI\_{group}.npy" \
-\# -> annotation coordinates (U) ------------------------------------ "\_GO\_Embeddings\_Leaf\_PPI\_{tissue}\_{dim}\_{matrix}\_{group}.csv"
+### `calculate_networks`
+**Generate the networks and their statistics**
 
-$` \text{calculate\_FMMs} `$ \
-\## _generate the FMMs_ \
-\# load annotation coordinates (U) ---------------------------------- "\_GO\_Embeddings\_Leaf\_PPI\_{tissue}\_{dim}\_{matrix}\_{group}.csv" \
-\# calculate cosine annotation distances \
-\# -> cosine annotation distances (FMM) ---------------------------- "Cosine\_{group}\_{tissue}\_{dim}\_PPMI\_Leaf.csv" 
+#### Steps:
+- **Load genes** → `{group}_{tissue}_Genes.csv`
+- **Load PPI** → `Human_Biogrid_Genes_PPI_`
+- **Load adjacencies** → `Human_Biogrid_Adj_PPI_.npy`
+- **Generate network** → `{group}_{tissue}_PPI.npy`
+- **Generate Venn Diagram** → `Venn_Diagrams_Networks.svg`
+- **Compute Network Statistics** → `Network_Statistics.txt`
 
-$` \text{calculate\_movements} `$ \
-\## _enrichment analysis (with self made cancer relatedness)_ \
-\# load cosine annotation distances (FMM) --------------------------"Cosine\_{group}\_{tissue}\_{dim}\_PPMI\_Leaf.csv" \
-\# load common set -------------------------------------------------- "Common\_Set\_{tissue}\_Leaf.csv" \
-\# intersect the two files \
-\# calculate movement between cancer and control \
-\# -> annotation movement ------------------------------------------ "Rank\_movement\_{tissue}\_PPMI\_Leaf.csv"
+---
 
-$` \text{literature\_search} `$ \
-\## _Literature validation_ \
-\# load top moving --------------------------------------------------- "top\_100\_moving\_{tissue}.csv" \
-\# query top moving to ncbi  \
-\# -> ------------------------------------------------------------------- "Top\_moving\_{tissue}\_Table.csv" \
-\# load gene descriptions (arbitrary genes) -------------------------- "Transformed\_Common\_{tissue}.csv" \
-\# query gene descriptions to ncbi \
-\# -> gene literature -------------------------------------------------- "Cancer\_Count\_{tissue}.csv"
+### `calculate_PPMI`
+**Generate the PPMI matrix**
 
-$` \text{calculate\_annotation\_gene\_distances} `$ \
-\## _calculate the distance between genes and annotations withn the embedding space_ \
-\# load gene coordinates (P) ------------------------------------------ "Embeddings/\_P\_Matrix\_{dim}\_PPI\_{tissue}\_{matrix}\_{group}.npy" \
-\# load gene coordinates (S) ------------------------------------------ "Embeddings/\_U\_Matrix\_{dim}\_PPI\_{tissue}\_{matrix}\_{group}.npy" \
-\# calculate gene coordinates by multiplying P and S \
-\# load annotation coordinates (U) ----------------------------------- "\_GO\_Embeddings\_Leaf\_PPI\_{tissue}\_{dim}\_PPMI\_{group}.csv" \
-\# load annotation movement ---------------------------------------- "Rank\_movement\_{tissue}\_PPMI\_Leaf.csv" \
-\# subset the top 100 moving from the annotation coordinates \
-\# calculate distances between top 100 annotation coordinates and gene coordinates \
-\# -> annotation gene distances -------------------------------------- "{group}\_Gene\_GO\_dist\_{tissue}.csv"
+#### Steps:
+- **Load network** → `{group}_{tissue}_PPI.npy`
+- **Perform a deep-walk**
+- **Generate PPMI** → `{group}_PPMI_{tissue}.npy`
 
-$` \text{eval\_functional\_organization\_2} `$ \
-\## _test whether embedding spaces capture annotation beloningness for genes_ \
-\# load annotation gene distances ------------------------------------ "{group}\_Gene\_GO\_dist\_{tissue}.csv" \
-\# split in distances to belonging annotations and non belonging annotations \
-\# mannwhitneyu test: H0 = distance to belonging annotations does not differ for non-belonging annotations \
-\# -> organization evaluation ------------------------------------------ "Organization\_Common\_Space.txt"
+---
 
-$` \text{calculate\_optimal\_dimensionality} `$ \
-\## _Calculate relative error between spaces and deduce the optimal dimensionality_ \
-\# load cosine annotation distances (FMM) --------------------------- "FMM/Cosine\_{group}\_{tissue}\_{dim}\_PPMI\_Leaf.csv" \
-\# load annotations ----------------------------------------------------- "gene2go\_Human\_PPIGO\_Specific\_BP.json" \
-\# intersect the two files \
-\# calculate relative error between embedding spaces of different dimensionalities \
-\# -> relative error ------------------------------------------------------ "FMM/Relative\_{group}\_{tissue}\_PPMI\_Leaf.txt"
+### `calculate_embeddings`
+**Generate the embedding coordinates for the genes**
 
-$` \text{eval\_optimal\_dimensionality} `$ \
-\## _plot the relative error between embedding spaces of increasing dimensionality_ \
-\# load relative error --------------------------------------------------- "FMM/Relative\_{Group}\_{tissue}\_PPMI\_Leaf.txt" \
-\# -> Error between dimensionalities ---------------------------------- "FMM/Relative\_Error\_Leaf.svg"
+#### Steps:
+- **Load network** → `{group}_{tissue}_PPI.npy`
+- **Load PPMI** → `{group}_PPMI_{tissue}.npy`
+- **Perform NMTF**:
+  - **Embedding space (G):** `Embeddings/G_Matrix_{dim}_PPI_{tissue}_{matrix}_{group}.npy`
+  - **Gene coordinates (P):** `Embeddings/P_Matrix_{dim}_PPI_{tissue}_{matrix}_{group}.npy`
+  - **Gene coordinates (S):** `Embeddings/U_Matrix_{dim}_PPI_{tissue}_{matrix}_{group}.npy`
 
-$` \text{eval\_movements} `$ \
-\## _statistical tests to evaluate the corrlatio between annotation movement and cancer using author defined cancer hallmarks_ \
-\# load cancer annotations (by the authors) -------------------------- "enriched\_in\_cancer\_gobp\_terms\_cosmic.txt" \
-\# load annotation movement ----------------------------------------- "Rank\_movement\_{tissue}\_PPMI\_Leaf.csv" \
-\# mannwhitneyu test: H0 = high movement does not correlate with cancer \
-\# hypergeom test: H0 = high movement does not correlate with cancer \
-\# -> movement evaluation --------------------------------------------"movement\_evaluation.txt" \
-\# plot movement evaluation \
-\# -> movement evaluation plot -------------------------------------- "cancer\_enrichments\_2std.svg"
+---
 
-$` \text{calculate\_semantic\_similarity} `$ \
-\## _Assess the functional organization of genes and functions in the embedding space_ \
-\# load cosine annotation distances (FMM) -------------------------- "FMM/Cosine\_{Group}\_{tissue}\_{dim}\_PPMI_Leaf.csv" \
-\# load common genes ----------------------------------------------- "Common\_Set\_{tissue}\_Leaf.csv" \
-\# intersect the two \
-\# subset the most similar and dissimilar annotation pairs \
-\# load annotation descriptions ----------------------------------------"go-basic.obo" \
-\# calulate Lin similarity for these annotation pairs based on their description \
-\# calculate Jaccard distance between cancer and control \
-\# -> similarities -------------------------------------------------------- "Similarity\_{tissue}\_Common\_Set\_500.json"
+### `calculate_annotation_coordinates`
+**Calculate the embedding coordinates for annotations (U-matrix)**
 
-$` \text{eval\_functional\_organization\_1} `$ \
-\## _plot how well the embedding space captures semantic similarity between annotations via distance_ \
-\# load similarities ------------------------------------------------------ "Similarity\_{tissue}\_Common\_Set\_500.json" \
-\# -> similarity plot ----------------------------------------------------- "Functional\_Organization\_Leaf\_Common\_Set.svg"
+#### Steps:
+- **Load annotations** → `_Matrix_Genes_GO_BP_PPI.csv`
+- **Load genes** → `{group}_{tissue}_Genes.csv`
+- **Intersect annotations with genes and clean data**
+- **Load embedding space (G)** → `_G_Matrix_{dim}_PPI_{tissue}_PPMI_{group}.npy`
+- **Generate annotation coordinates (U)** → `_GO_Embeddings_Leaf_PPI_{tissue}_{dim}_{matrix}_{group}.csv`
 
-$` \text{eval\_predictions} `$ \
-\## _Do the gene predictions and validate them with an enrichment analyses_ \
-\# load annotation movement -------------------------------------------- "Rank\_movement\_{tissue}\_PPMI\_Leaf.csv" \
-\# subset the most moving annotations (2*std) \
-\# load annotation gene distances --------------------------------------- "{Group}\_Gene\_GO\_dist\_{tissue}.csv" \
-\# intersect the two \
-\# calculate the change of distance of genes to the most moving annotations between cancer and control \	
-\# normalize the distribution \
-\# subset the the top 5% \
-\# load gene literature ---------------------------------------------------- "Cancer\_Count\_{tissue}.csv" \
-\# intersect the two \
-\# -> gene predictions ---------------------------------------------------- "Predictions\_Rank\_{tissue}.csv" \
-\# hypergeom test: H0 = top 5% are not enriched in literature validated genes \
-\# hypergeom test: H0 = bottom 5% are not depleted in literature validated genes \
-\# -> prediction evaluation ----------------------------------------------- "Fold\_Rank\_Table\_Dos.txt"
+---
 
-$` \text{gather\_results} `$ \
-\## _copy results into result folder_
+### `calculate_FMMs`
+**Generate the FMMs**
+
+#### Steps:
+- **Load annotation coordinates (U)** → `_GO_Embeddings_Leaf_PPI_{tissue}_{dim}_{matrix}_{group}.csv`
+- **Calculate cosine annotation distances**
+- **Generate FMM** → `Cosine_{group}_{tissue}_{dim}_PPMI_Leaf.csv`
+
+---
+
+### `calculate_movements`
+**Perform enrichment analysis (self-made cancer relatedness measure)**
+
+#### Steps:
+- **Load cosine annotation distances (FMM)** → `Cosine_{group}_{tissue}_{dim}_PPMI_Leaf.csv`
+- **Load common set** → `Common_Set_{tissue}_Leaf.csv`
+- **Intersect the two files**
+- **Calculate movement between cancer and control**
+- **Generate annotation movement** → `Rank_movement_{tissue}_PPMI_Leaf.csv`
+
+---
+
+### `literature_search`
+**Perform literature validation**
+
+#### Steps:
+- **Load top moving annotations** → `top_100_moving_{tissue}.csv`
+- **Query top moving to NCBI** → `Top_moving_{tissue}_Table.csv`
+- **Load gene descriptions (arbitrary genes)** → `Transformed_Common_{tissue}.csv`
+- **Query gene descriptions to NCBI**
+- **Generate gene literature results** → `Cancer_Count_{tissue}.csv`
+
+---
+
+### `calculate_annotation_gene_distances`
+**Calculate the distance between genes and annotations in the embedding space**
+
+#### Steps:
+- **Load gene coordinates (P, S)**
+- **Compute gene coordinates by multiplying P and S**
+- **Load annotation coordinates (U)**
+- **Load annotation movement**
+- **Subset the top 100 moving annotations**
+- **Compute distances between top 100 annotations and genes**
+- **Generate annotation gene distances** → `{group}_Gene_GO_dist_{tissue}.csv`
+
+---
+
+### `eval_functional_organization_2`
+**Test whether embedding spaces capture annotation belongingness for genes**
+
+#### Steps:
+- **Load annotation gene distances** → `{group}_Gene_GO_dist_{tissue}.csv`
+- **Split distances into belonging and non-belonging annotations**
+- **Perform Mann-Whitney U test**
+- **Generate evaluation results** → `Organization_Common_Space.txt`
+
+---
+
+### `calculate_optimal_dimensionality`
+**Calculate relative error between spaces and deduce the optimal dimensionality**
+
+#### Steps:
+- **Load cosine annotation distances (FMM)**
+- **Load annotations** → `gene2go_Human_PPIGO_Specific_BP.json`
+- **Intersect the two files**
+- **Calculate relative error between embedding spaces**
+- **Generate relative error results** → `FMM/Relative_{group}_{tissue}_PPMI_Leaf.txt`
+
+---
+
+### `eval_optimal_dimensionality`
+**Plot relative error between embedding spaces of increasing dimensionality**
+
+#### Steps:
+- **Load relative error** → `FMM/Relative_{Group}_{tissue}_PPMI_Leaf.txt`
+- **Generate error plot** → `FMM/Relative_Error_Leaf.svg`
+
+---
+
+### `eval_movements`
+**Statistical tests to evaluate correlation between annotation movement and cancer**
+
+#### Steps:
+- **Load cancer annotations** → `enriched_in_cancer_gobp_terms_cosmic.txt`
+- **Load annotation movement**
+- **Perform Mann-Whitney U and Hypergeometric tests**
+- **Generate movement evaluation** → `movement_evaluation.txt`
+- **Generate movement evaluation plot** → `cancer_enrichments_2std.svg`
+
+---
+
+### `calculate_semantic_similarity`
+**Assess functional organization of genes and functions in the embedding space**
+
+#### Steps:
+- **Load cosine annotation distances (FMM)**
+- **Load common genes**
+- **Intersect the two**
+- **Subset most similar/dissimilar annotation pairs**
+- **Load annotation descriptions** → `go-basic.obo`
+- **Calculate Lin similarity & Jaccard distance**
+- **Generate similarities** → `Similarity_{tissue}_Common_Set_500.json`
+
+---
+
+### `eval_functional_organization_1`
+**Plot how well the embedding space captures semantic similarity between annotations**
+
+#### Steps:
+- **Load similarities** → `Similarity_{tissue}_Common_Set_500.json`
+- **Generate similarity plot** → `Functional_Organization_Leaf_Common_Set.svg`
+
+---
+
+### `eval_predictions`
+**Perform gene predictions and validate them with enrichment analysis**
+
+#### Steps:
+- **Load annotation movement**
+- **Subset most moving annotations (2*std)**
+- **Load annotation gene distances**
+- **Compute change of distance for genes**
+- **Normalize distribution & subset top 5%**
+- **Load gene literature**
+- **Perform enrichment analysis**
+- **Generate predictions** → `Predictions_Rank_{tissue}.csv`
+
+---
+
+### `gather_results`
+**Copy results into result folder**
+
 
 
 
